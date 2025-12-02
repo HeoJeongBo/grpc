@@ -707,18 +707,7 @@ const file_item_v1_item_proto_rawDesc = "" +
 	"\x12WatchItemsResponse\x12!\n" +
 	"\x04item\x18\x01 \x01(\v2\r.item.v1.ItemR\x04item\x12\x1d\n" +
 	"\n" +
-	"event_type\x18\x02 \x01(\tR\teventType2\xb9\x03\n" +
-	"\vItemService\x12G\n" +
-	"\n" +
-	"CreateItem\x12\x1a.item.v1.CreateItemRequest\x1a\x1b.item.v1.CreateItemResponse\"\x00\x12>\n" +
-	"\aGetItem\x12\x17.item.v1.GetItemRequest\x1a\x18.item.v1.GetItemResponse\"\x00\x12D\n" +
-	"\tListItems\x12\x19.item.v1.ListItemsRequest\x1a\x1a.item.v1.ListItemsResponse\"\x00\x12G\n" +
-	"\n" +
-	"UpdateItem\x12\x1a.item.v1.UpdateItemRequest\x1a\x1b.item.v1.UpdateItemResponse\"\x00\x12G\n" +
-	"\n" +
-	"DeleteItem\x12\x1a.item.v1.DeleteItemRequest\x1a\x1b.item.v1.DeleteItemResponse\"\x00\x12I\n" +
-	"\n" +
-	"WatchItems\x12\x1a.item.v1.WatchItemsRequest\x1a\x1b.item.v1.WatchItemsResponse\"\x000\x01B\x97\x01\n" +
+	"event_type\x18\x02 \x01(\tR\teventTypeB\x97\x01\n" +
 	"\vcom.item.v1B\tItemProtoP\x01Z@github.com/heojeongbo/grpc/server/proto-generated/item/v1;itemv1\xa2\x02\x03IXX\xaa\x02\aItem.V1\xca\x02\aItem\\V1\xe2\x02\x13Item\\V1\\GPBMetadata\xea\x02\bItem::V1b\x06proto3"
 
 var (
@@ -758,20 +747,8 @@ var file_item_v1_item_proto_depIdxs = []int32{
 	0,  // 4: item.v1.ListItemsResponse.items:type_name -> item.v1.Item
 	0,  // 5: item.v1.UpdateItemResponse.item:type_name -> item.v1.Item
 	0,  // 6: item.v1.WatchItemsResponse.item:type_name -> item.v1.Item
-	1,  // 7: item.v1.ItemService.CreateItem:input_type -> item.v1.CreateItemRequest
-	3,  // 8: item.v1.ItemService.GetItem:input_type -> item.v1.GetItemRequest
-	5,  // 9: item.v1.ItemService.ListItems:input_type -> item.v1.ListItemsRequest
-	7,  // 10: item.v1.ItemService.UpdateItem:input_type -> item.v1.UpdateItemRequest
-	9,  // 11: item.v1.ItemService.DeleteItem:input_type -> item.v1.DeleteItemRequest
-	11, // 12: item.v1.ItemService.WatchItems:input_type -> item.v1.WatchItemsRequest
-	2,  // 13: item.v1.ItemService.CreateItem:output_type -> item.v1.CreateItemResponse
-	4,  // 14: item.v1.ItemService.GetItem:output_type -> item.v1.GetItemResponse
-	6,  // 15: item.v1.ItemService.ListItems:output_type -> item.v1.ListItemsResponse
-	8,  // 16: item.v1.ItemService.UpdateItem:output_type -> item.v1.UpdateItemResponse
-	10, // 17: item.v1.ItemService.DeleteItem:output_type -> item.v1.DeleteItemResponse
-	12, // 18: item.v1.ItemService.WatchItems:output_type -> item.v1.WatchItemsResponse
-	13, // [13:19] is the sub-list for method output_type
-	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for method output_type
+	7,  // [7:7] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
 	7,  // [7:7] is the sub-list for extension extendee
 	0,  // [0:7] is the sub-list for field type_name
@@ -790,7 +767,7 @@ func file_item_v1_item_proto_init() {
 			NumEnums:      0,
 			NumMessages:   13,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_item_v1_item_proto_goTypes,
 		DependencyIndexes: file_item_v1_item_proto_depIdxs,

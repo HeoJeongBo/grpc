@@ -123,6 +123,35 @@ func (s *itemServer) DeleteItem(
 	return connect.NewResponse(&itemv1.DeleteItemResponse{}), nil
 }
 
+func (s *itemServer) WatchItems(
+	ctx context.Context,
+	req *connect.Request[itemv1.WatchItemsRequest],
+	stream *connect.ServerStream[itemv1.WatchItemsResponse],
+) error {
+	// Demo: Send current items every 5 seconds
+	ticker := time.NewTicker(5 * time.Second)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case <-ticker.C:
+			s.mu.RLock()
+			for _, item := range s.items {
+				if err := stream.Send(&itemv1.WatchItemsResponse{
+					Item:      item,
+					EventType: "UPDATE",
+				}); err != nil {
+					s.mu.RUnlock()
+					return err
+				}
+			}
+			s.mu.RUnlock()
+		}
+	}
+}
+
 func main() {
 	server := newItemServer()
 	mux := http.NewServeMux()

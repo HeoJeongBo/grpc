@@ -15,12 +15,12 @@ plugins:
     opt:
       - paths=source_relative
   # TypeScript plugins
-  - remote: buf.build/bufbuild/es
+  - local: client/node_modules/.bin/protoc-gen-es
     out: client/src/proto-generated
     opt:
       - target=ts
       - import_extension=none
-  - remote: buf.build/connectrpc/es
+  - local: client/node_modules/.bin/protoc-gen-connect-es
     out: client/src/proto-generated
     opt:
       - target=ts

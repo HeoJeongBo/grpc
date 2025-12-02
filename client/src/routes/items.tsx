@@ -18,7 +18,7 @@ function Items() {
 		setLoading(true);
 		try {
 			const response = await itemClient.listItems({});
-			setItems(response.items);
+			setItems(response.items || []);
 		} catch (error) {
 			console.error("Failed to load items:", error);
 		} finally {
@@ -157,7 +157,12 @@ function Items() {
 											{item.description}
 										</p>
 										<p className="text-xs text-gray-400 mt-2">
-											Created: {item.createdAt?.toDate().toLocaleString()}
+											Created:{" "}
+											{item.createdAt
+												? new Date(
+														Number(item.createdAt.seconds) * 1000,
+													).toLocaleString()
+												: "N/A"}
 										</p>
 									</div>
 									<div className="flex gap-2">

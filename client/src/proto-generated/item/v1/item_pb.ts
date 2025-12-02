@@ -2,8 +2,8 @@
 // @generated from file item/v1/item.proto (package item.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
+import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/v1/item.proto.
  */
 export const file_item_v1_item: GenFile = /*@__PURE__*/
-  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEilQEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlIhMKEVdhdGNoSXRlbXNSZXF1ZXN0IkUKEldhdGNoSXRlbXNSZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtEhIKCmV2ZW50X3R5cGUYAiABKAkyuQMKC0l0ZW1TZXJ2aWNlEkcKCkNyZWF0ZUl0ZW0SGi5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5DcmVhdGVJdGVtUmVzcG9uc2UiABI+CgdHZXRJdGVtEhcuaXRlbS52MS5HZXRJdGVtUmVxdWVzdBoYLml0ZW0udjEuR2V0SXRlbVJlc3BvbnNlIgASRAoJTGlzdEl0ZW1zEhkuaXRlbS52MS5MaXN0SXRlbXNSZXF1ZXN0GhouaXRlbS52MS5MaXN0SXRlbXNSZXNwb25zZSIAEkcKClVwZGF0ZUl0ZW0SGi5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5VcGRhdGVJdGVtUmVzcG9uc2UiABJHCgpEZWxldGVJdGVtEhouaXRlbS52MS5EZWxldGVJdGVtUmVxdWVzdBobLml0ZW0udjEuRGVsZXRlSXRlbVJlc3BvbnNlIgASSQoKV2F0Y2hJdGVtcxIaLml0ZW0udjEuV2F0Y2hJdGVtc1JlcXVlc3QaGy5pdGVtLnYxLldhdGNoSXRlbXNSZXNwb25zZSIAMAFClwEKC2NvbS5pdGVtLnYxQglJdGVtUHJvdG9QAVpAZ2l0aHViLmNvbS9oZW9qZW9uZ2JvL2dycGMvc2VydmVyL3Byb3RvLWdlbmVyYXRlZC9pdGVtL3YxO2l0ZW12MaICA0lYWKoCB0l0ZW0uVjHKAgdJdGVtXFYx4gITSXRlbVxWMVxHUEJNZXRhZGF0YeoCCEl0ZW06OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEilQEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlIhMKEVdhdGNoSXRlbXNSZXF1ZXN0IkUKEldhdGNoSXRlbXNSZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtEhIKCmV2ZW50X3R5cGUYAiABKAlClwEKC2NvbS5pdGVtLnYxQglJdGVtUHJvdG9QAVpAZ2l0aHViLmNvbS9oZW9qZW9uZ2JvL2dycGMvc2VydmVyL3Byb3RvLWdlbmVyYXRlZC9pdGVtL3YxO2l0ZW12MaICA0lYWKoCB0l0ZW0uVjHKAgdJdGVtXFYx4gITSXRlbVxWMVxHUEJNZXRhZGF0YeoCCEl0ZW06OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * Item represents a basic CRUD entity
@@ -292,63 +292,4 @@ export type WatchItemsResponse = Message<"item.v1.WatchItemsResponse"> & {
  */
 export const WatchItemsResponseSchema: GenMessage<WatchItemsResponse> = /*@__PURE__*/
   messageDesc(file_item_v1_item, 12);
-
-/**
- * ItemService provides CRUD operations for items
- *
- * @generated from service item.v1.ItemService
- */
-export const ItemService: GenService<{
-  /**
-   * @generated from rpc item.v1.ItemService.CreateItem
-   */
-  createItem: {
-    methodKind: "unary";
-    input: typeof CreateItemRequestSchema;
-    output: typeof CreateItemResponseSchema;
-  },
-  /**
-   * @generated from rpc item.v1.ItemService.GetItem
-   */
-  getItem: {
-    methodKind: "unary";
-    input: typeof GetItemRequestSchema;
-    output: typeof GetItemResponseSchema;
-  },
-  /**
-   * @generated from rpc item.v1.ItemService.ListItems
-   */
-  listItems: {
-    methodKind: "unary";
-    input: typeof ListItemsRequestSchema;
-    output: typeof ListItemsResponseSchema;
-  },
-  /**
-   * @generated from rpc item.v1.ItemService.UpdateItem
-   */
-  updateItem: {
-    methodKind: "unary";
-    input: typeof UpdateItemRequestSchema;
-    output: typeof UpdateItemResponseSchema;
-  },
-  /**
-   * @generated from rpc item.v1.ItemService.DeleteItem
-   */
-  deleteItem: {
-    methodKind: "unary";
-    input: typeof DeleteItemRequestSchema;
-    output: typeof DeleteItemResponseSchema;
-  },
-  /**
-   * Server streaming: Watch item changes in real-time
-   *
-   * @generated from rpc item.v1.ItemService.WatchItems
-   */
-  watchItems: {
-    methodKind: "server_streaming";
-    input: typeof WatchItemsRequestSchema;
-    output: typeof WatchItemsResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_item_v1_item, 0);
 
