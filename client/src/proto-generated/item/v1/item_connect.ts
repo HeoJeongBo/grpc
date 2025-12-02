@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateItemRequest, CreateItemResponse, DeleteItemRequest, DeleteItemResponse, GetItemRequest, GetItemResponse, ListItemsRequest, ListItemsResponse, UpdateItemRequest, UpdateItemResponse } from "./item_pb";
+import { CreateItemRequest, CreateItemResponse, DeleteItemRequest, DeleteItemResponse, GetItemRequest, GetItemResponse, ListItemsRequest, ListItemsResponse, UpdateItemRequest, UpdateItemResponse, WatchItemsRequest, WatchItemsResponse } from "./item_pb";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -58,6 +58,17 @@ export const ItemService = {
       I: DeleteItemRequest,
       O: DeleteItemResponse,
       kind: MethodKind.Unary,
+    },
+    /**
+     * Server streaming: Watch item changes in real-time
+     *
+     * @generated from rpc item.v1.ItemService.WatchItems
+     */
+    watchItems: {
+      name: "WatchItems",
+      I: WatchItemsRequest,
+      O: WatchItemsResponse,
+      kind: MethodKind.ServerStreaming,
     },
   }
 } as const;

@@ -63,6 +63,14 @@ message DeleteItemRequest {
 
 message DeleteItemResponse {}
 
+// WatchItemsRequest
+message WatchItemsRequest {}
+
+message WatchItemsResponse {
+  Item item = 1;
+  string event_type = 2; // "CREATED", "UPDATED", "DELETED"
+}
+
 // ItemService provides CRUD operations for items
 service ItemService {
   rpc CreateItem(CreateItemRequest) returns (CreateItemResponse) {}
@@ -70,4 +78,6 @@ service ItemService {
   rpc ListItems(ListItemsRequest) returns (ListItemsResponse) {}
   rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse) {}
   rpc DeleteItem(DeleteItemRequest) returns (DeleteItemResponse) {}
+  // Server streaming: Watch item changes in real-time
+  rpc WatchItems(WatchItemsRequest) returns (stream WatchItemsResponse) {}
 }

@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/v1/item.proto.
  */
 export const file_item_v1_item: GenFile = /*@__PURE__*/
-  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEilQEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlMu4CCgtJdGVtU2VydmljZRJHCgpDcmVhdGVJdGVtEhouaXRlbS52MS5DcmVhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuQ3JlYXRlSXRlbVJlc3BvbnNlIgASPgoHR2V0SXRlbRIXLml0ZW0udjEuR2V0SXRlbVJlcXVlc3QaGC5pdGVtLnYxLkdldEl0ZW1SZXNwb25zZSIAEkQKCUxpc3RJdGVtcxIZLml0ZW0udjEuTGlzdEl0ZW1zUmVxdWVzdBoaLml0ZW0udjEuTGlzdEl0ZW1zUmVzcG9uc2UiABJHCgpVcGRhdGVJdGVtEhouaXRlbS52MS5VcGRhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuVXBkYXRlSXRlbVJlc3BvbnNlIgASRwoKRGVsZXRlSXRlbRIaLml0ZW0udjEuRGVsZXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLkRlbGV0ZUl0ZW1SZXNwb25zZSIAQpcBCgtjb20uaXRlbS52MUIJSXRlbVByb3RvUAFaQGdpdGh1Yi5jb20vaGVvamVvbmdiby9ncnBjL3NlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbS92MTtpdGVtdjGiAgNJWFiqAgdJdGVtLlYxygIHSXRlbVxWMeICE0l0ZW1cVjFcR1BCTWV0YWRhdGHqAghJdGVtOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEilQEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlIhMKEVdhdGNoSXRlbXNSZXF1ZXN0IkUKEldhdGNoSXRlbXNSZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtEhIKCmV2ZW50X3R5cGUYAiABKAkyuQMKC0l0ZW1TZXJ2aWNlEkcKCkNyZWF0ZUl0ZW0SGi5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5DcmVhdGVJdGVtUmVzcG9uc2UiABI+CgdHZXRJdGVtEhcuaXRlbS52MS5HZXRJdGVtUmVxdWVzdBoYLml0ZW0udjEuR2V0SXRlbVJlc3BvbnNlIgASRAoJTGlzdEl0ZW1zEhkuaXRlbS52MS5MaXN0SXRlbXNSZXF1ZXN0GhouaXRlbS52MS5MaXN0SXRlbXNSZXNwb25zZSIAEkcKClVwZGF0ZUl0ZW0SGi5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5VcGRhdGVJdGVtUmVzcG9uc2UiABJHCgpEZWxldGVJdGVtEhouaXRlbS52MS5EZWxldGVJdGVtUmVxdWVzdBobLml0ZW0udjEuRGVsZXRlSXRlbVJlc3BvbnNlIgASSQoKV2F0Y2hJdGVtcxIaLml0ZW0udjEuV2F0Y2hJdGVtc1JlcXVlc3QaGy5pdGVtLnYxLldhdGNoSXRlbXNSZXNwb25zZSIAMAFClwEKC2NvbS5pdGVtLnYxQglJdGVtUHJvdG9QAVpAZ2l0aHViLmNvbS9oZW9qZW9uZ2JvL2dycGMvc2VydmVyL3Byb3RvLWdlbmVyYXRlZC9pdGVtL3YxO2l0ZW12MaICA0lYWKoCB0l0ZW0uVjHKAgdJdGVtXFYx4gITSXRlbVxWMVxHUEJNZXRhZGF0YeoCCEl0ZW06OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * Item represents a basic CRUD entity
@@ -255,6 +255,45 @@ export const DeleteItemResponseSchema: GenMessage<DeleteItemResponse> = /*@__PUR
   messageDesc(file_item_v1_item, 10);
 
 /**
+ * WatchItemsRequest
+ *
+ * @generated from message item.v1.WatchItemsRequest
+ */
+export type WatchItemsRequest = Message<"item.v1.WatchItemsRequest"> & {
+};
+
+/**
+ * Describes the message item.v1.WatchItemsRequest.
+ * Use `create(WatchItemsRequestSchema)` to create a new message.
+ */
+export const WatchItemsRequestSchema: GenMessage<WatchItemsRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item, 11);
+
+/**
+ * @generated from message item.v1.WatchItemsResponse
+ */
+export type WatchItemsResponse = Message<"item.v1.WatchItemsResponse"> & {
+  /**
+   * @generated from field: item.v1.Item item = 1;
+   */
+  item?: Item;
+
+  /**
+   * "CREATED", "UPDATED", "DELETED"
+   *
+   * @generated from field: string event_type = 2;
+   */
+  eventType: string;
+};
+
+/**
+ * Describes the message item.v1.WatchItemsResponse.
+ * Use `create(WatchItemsResponseSchema)` to create a new message.
+ */
+export const WatchItemsResponseSchema: GenMessage<WatchItemsResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item, 12);
+
+/**
  * ItemService provides CRUD operations for items
  *
  * @generated from service item.v1.ItemService
@@ -299,6 +338,16 @@ export const ItemService: GenService<{
     methodKind: "unary";
     input: typeof DeleteItemRequestSchema;
     output: typeof DeleteItemResponseSchema;
+  },
+  /**
+   * Server streaming: Watch item changes in real-time
+   *
+   * @generated from rpc item.v1.ItemService.WatchItems
+   */
+  watchItems: {
+    methodKind: "server_streaming";
+    input: typeof WatchItemsRequestSchema;
+    output: typeof WatchItemsResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_item_v1_item, 0);

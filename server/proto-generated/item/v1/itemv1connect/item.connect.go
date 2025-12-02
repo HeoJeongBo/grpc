@@ -43,6 +43,8 @@ const (
 	ItemServiceUpdateItemProcedure = "/item.v1.ItemService/UpdateItem"
 	// ItemServiceDeleteItemProcedure is the fully-qualified name of the ItemService's DeleteItem RPC.
 	ItemServiceDeleteItemProcedure = "/item.v1.ItemService/DeleteItem"
+	// ItemServiceWatchItemsProcedure is the fully-qualified name of the ItemService's WatchItems RPC.
+	ItemServiceWatchItemsProcedure = "/item.v1.ItemService/WatchItems"
 )
 
 // ItemServiceClient is a client for the item.v1.ItemService service.
@@ -52,6 +54,8 @@ type ItemServiceClient interface {
 	ListItems(context.Context, *connect.Request[v1.ListItemsRequest]) (*connect.Response[v1.ListItemsResponse], error)
 	UpdateItem(context.Context, *connect.Request[v1.UpdateItemRequest]) (*connect.Response[v1.UpdateItemResponse], error)
 	DeleteItem(context.Context, *connect.Request[v1.DeleteItemRequest]) (*connect.Response[v1.DeleteItemResponse], error)
+	// Server streaming: Watch item changes in real-time
+	WatchItems(context.Context, *connect.Request[v1.WatchItemsRequest]) (*connect.ServerStreamForClient[v1.WatchItemsResponse], error)
 }
 
 // NewItemServiceClient constructs a client for the item.v1.ItemService service. By default, it uses
@@ -95,6 +99,12 @@ func NewItemServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(itemServiceMethods.ByName("DeleteItem")),
 			connect.WithClientOptions(opts...),
 		),
+		watchItems: connect.NewClient[v1.WatchItemsRequest, v1.WatchItemsResponse](
+			httpClient,
+			baseURL+ItemServiceWatchItemsProcedure,
+			connect.WithSchema(itemServiceMethods.ByName("WatchItems")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -105,6 +115,7 @@ type itemServiceClient struct {
 	listItems  *connect.Client[v1.ListItemsRequest, v1.ListItemsResponse]
 	updateItem *connect.Client[v1.UpdateItemRequest, v1.UpdateItemResponse]
 	deleteItem *connect.Client[v1.DeleteItemRequest, v1.DeleteItemResponse]
+	watchItems *connect.Client[v1.WatchItemsRequest, v1.WatchItemsResponse]
 }
 
 // CreateItem calls item.v1.ItemService.CreateItem.
@@ -132,6 +143,11 @@ func (c *itemServiceClient) DeleteItem(ctx context.Context, req *connect.Request
 	return c.deleteItem.CallUnary(ctx, req)
 }
 
+// WatchItems calls item.v1.ItemService.WatchItems.
+func (c *itemServiceClient) WatchItems(ctx context.Context, req *connect.Request[v1.WatchItemsRequest]) (*connect.ServerStreamForClient[v1.WatchItemsResponse], error) {
+	return c.watchItems.CallServerStream(ctx, req)
+}
+
 // ItemServiceHandler is an implementation of the item.v1.ItemService service.
 type ItemServiceHandler interface {
 	CreateItem(context.Context, *connect.Request[v1.CreateItemRequest]) (*connect.Response[v1.CreateItemResponse], error)
@@ -139,6 +155,8 @@ type ItemServiceHandler interface {
 	ListItems(context.Context, *connect.Request[v1.ListItemsRequest]) (*connect.Response[v1.ListItemsResponse], error)
 	UpdateItem(context.Context, *connect.Request[v1.UpdateItemRequest]) (*connect.Response[v1.UpdateItemResponse], error)
 	DeleteItem(context.Context, *connect.Request[v1.DeleteItemRequest]) (*connect.Response[v1.DeleteItemResponse], error)
+	// Server streaming: Watch item changes in real-time
+	WatchItems(context.Context, *connect.Request[v1.WatchItemsRequest], *connect.ServerStream[v1.WatchItemsResponse]) error
 }
 
 // NewItemServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -178,6 +196,12 @@ func NewItemServiceHandler(svc ItemServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(itemServiceMethods.ByName("DeleteItem")),
 		connect.WithHandlerOptions(opts...),
 	)
+	itemServiceWatchItemsHandler := connect.NewServerStreamHandler(
+		ItemServiceWatchItemsProcedure,
+		svc.WatchItems,
+		connect.WithSchema(itemServiceMethods.ByName("WatchItems")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/item.v1.ItemService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ItemServiceCreateItemProcedure:
@@ -190,6 +214,8 @@ func NewItemServiceHandler(svc ItemServiceHandler, opts ...connect.HandlerOption
 			itemServiceUpdateItemHandler.ServeHTTP(w, r)
 		case ItemServiceDeleteItemProcedure:
 			itemServiceDeleteItemHandler.ServeHTTP(w, r)
+		case ItemServiceWatchItemsProcedure:
+			itemServiceWatchItemsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -217,4 +243,8 @@ func (UnimplementedItemServiceHandler) UpdateItem(context.Context, *connect.Requ
 
 func (UnimplementedItemServiceHandler) DeleteItem(context.Context, *connect.Request[v1.DeleteItemRequest]) (*connect.Response[v1.DeleteItemResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("item.v1.ItemService.DeleteItem is not implemented"))
+}
+
+func (UnimplementedItemServiceHandler) WatchItems(context.Context, *connect.Request[v1.WatchItemsRequest], *connect.ServerStream[v1.WatchItemsResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("item.v1.ItemService.WatchItems is not implemented"))
 }
