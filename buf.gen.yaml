@@ -1,0 +1,23 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/heojeongbo/grpc/server/proto-generated
+plugins:
+  # Go plugins
+  - remote: buf.build/protocolbuffers/go
+    out: server/proto-generated
+    opt:
+      - paths=source_relative
+  - remote: buf.build/connectrpc/go
+    out: server/proto-generated
+    opt:
+      - paths=source_relative
+  # TypeScript plugins
+  - remote: buf.build/connectrpc/es
+    out: client/src/proto-generated
+    opt:
+      - target=ts
+inputs:
+  - directory: proto
