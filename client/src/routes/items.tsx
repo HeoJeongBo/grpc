@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Button, Card, Dialog, Input, Textarea } from "@/components/ui";
 import { itemClient } from "@/lib/client";
 import type { Item } from "@/proto-generated/item/v1/item_pb";
 
@@ -10,11 +12,11 @@ export const Route = createFileRoute("/items")({
 function Items() {
 	const [items, setItems] = useState<Item[]>([]);
 	const [loading, setLoading] = useState(false);
-	const [showForm, setShowForm] = useState(false);
+	const [showDialog, setShowDialog] = useState(false);
 	const [editingItem, setEditingItem] = useState<Item | null>(null);
 	const [formData, setFormData] = useState({ name: "", description: "" });
 
-	const loadItems = async () => {
+	const loadItems = useCallback(async () => {
 		setLoading(true);
 		try {
 			const response = await itemClient.listItems({});
@@ -24,11 +26,11 @@ function Items() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
-		loadItems()
-	}, [])
+		loadItems();
+	}, [loadItems]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -47,7 +49,7 @@ function Items() {
 			}
 			setFormData({ name: "", description: "" });
 			setEditingItem(null);
-			setShowForm(false);
+			setShowDialog(false);
 			loadItems();
 		} catch (error) {
 			console.error("Failed to save item:", error);
@@ -57,7 +59,7 @@ function Items() {
 	const handleEdit = (item: Item) => {
 		setEditingItem(item);
 		setFormData({ name: item.name, description: item.description });
-		setShowForm(true);
+		setShowDialog(true);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -73,121 +75,148 @@ function Items() {
 	const handleCancel = () => {
 		setFormData({ name: "", description: "" });
 		setEditingItem(null);
-		setShowForm(false);
+		setShowDialog(false);
+	};
+
+	const openCreateDialog = () => {
+		setEditingItem(null);
+		setFormData({ name: "", description: "" });
+		setShowDialog(true);
 	};
 
 	return (
-		<div className="px-4 py-6 sm:px-0">
-			<div className="flex justify-between items-center mb-6">
-				<h1 className="text-3xl font-bold text-gray-900">Items</h1>
-				<button
-					onClick={() => setShowForm(true)}
-					className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-				>
+		<div className="container mx-auto px-4 py-8 max-w-6xl">
+			<div className="flex justify-between items-center mb-8">
+				<div>
+					<h1 className="text-4xl font-bold tracking-tight">Items</h1>
+					<p className="text-muted-foreground mt-2">
+						Manage your items with full CRUD operations
+					</p>
+				</div>
+				<Button onClick={openCreateDialog}>
+					<Plus className="h-4 w-4 mr-2" />
 					Add Item
-				</button>
+				</Button>
 			</div>
 
-			{showForm && (
-				<div className="mb-6 bg-white p-6 rounded-lg shadow">
-					<h2 className="text-xl font-semibold mb-4">
-						{editingItem ? "Edit Item" : "Create New Item"}
-					</h2>
+			{/* Dialog for Create/Edit */}
+			<Dialog open={showDialog} onOpenChange={setShowDialog}>
+				<Dialog.Content>
+					<Dialog.Header>
+						<Dialog.Title>
+							{editingItem ? "Edit Item" : "Create New Item"}
+						</Dialog.Title>
+						<Dialog.Description>
+							{editingItem
+								? "Update the item details below"
+								: "Fill in the details for your new item"}
+						</Dialog.Description>
+					</Dialog.Header>
+
 					<form onSubmit={handleSubmit}>
-						<div className="mb-4">
-							<label className="block text-sm font-medium text-gray-700 mb-2">
-								Name
-							</label>
-							<input
+						<div className="space-y-4 py-4">
+							<Input.Field
+								label="Name"
 								type="text"
 								value={formData.name}
 								onChange={(e) =>
 									setFormData({ ...formData, name: e.target.value })
 								}
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
 								required
+								placeholder="Enter item name"
 							/>
-						</div>
-						<div className="mb-4">
-							<label className="block text-sm font-medium text-gray-700 mb-2">
-								Description
-							</label>
-							<textarea
+
+							<Textarea.Field
+								label="Description"
 								value={formData.description}
 								onChange={(e) =>
 									setFormData({ ...formData, description: e.target.value })
 								}
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-								rows={3}
 								required
+								rows={4}
+								placeholder="Enter item description"
 							/>
 						</div>
-						<div className="flex gap-2">
-							<button
-								type="submit"
-								className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-							>
-								{editingItem ? "Update" : "Create"}
-							</button>
-							<button
-								type="button"
-								onClick={handleCancel}
-								className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
-							>
-								Cancel
-							</button>
-						</div>
-					</form>
-				</div>
-			)}
 
+						<Dialog.Footer>
+							<Button type="button" variant="outline" onClick={handleCancel}>
+								Cancel
+							</Button>
+							<Button type="submit">{editingItem ? "Update" : "Create"}</Button>
+						</Dialog.Footer>
+					</form>
+				</Dialog.Content>
+			</Dialog>
+
+			{/* Items List */}
 			{loading ? (
-				<div className="text-center py-8">Loading...</div>
+				<div className="flex items-center justify-center py-12">
+					<div className="text-muted-foreground">Loading...</div>
+				</div>
+			) : items.length === 0 ? (
+				<Card>
+					<Card.Content className="flex flex-col items-center justify-center py-12">
+						<p className="text-muted-foreground text-center">
+							No items yet. Create your first item!
+						</p>
+						<Button onClick={openCreateDialog} className="mt-4">
+							<Plus className="h-4 w-4 mr-2" />
+							Create First Item
+						</Button>
+					</Card.Content>
+				</Card>
 			) : (
-				<div className="bg-white shadow overflow-hidden sm:rounded-md">
-					<ul className="divide-y divide-gray-200">
-						{items.map((item) => (
-							<li key={item.id} className="px-6 py-4 hover:bg-gray-50">
-								<div className="flex items-center justify-between">
-									<div className="flex-1">
-										<h3 className="text-lg font-medium text-gray-900">
-											{item.name}
-										</h3>
-										<p className="text-sm text-gray-600 mt-1">
-											{item.description}
+				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+					{items.map((item) => (
+						<Card key={item.id}>
+							<Card.Header>
+								<Card.Title>{item.name}</Card.Title>
+								<Card.Description>{item.description}</Card.Description>
+							</Card.Header>
+
+							<Card.Content>
+								<div className="text-xs text-muted-foreground space-y-1">
+									<p>
+										Created:{" "}
+										{item.createdAt
+											? new Date(
+													Number(item.createdAt.seconds) * 1000,
+												).toLocaleDateString()
+											: "N/A"}
+									</p>
+									{item.updatedAt && (
+										<p>
+											Updated:{" "}
+											{new Date(
+												Number(item.updatedAt.seconds) * 1000,
+											).toLocaleDateString()}
 										</p>
-										<p className="text-xs text-gray-400 mt-2">
-											Created:{" "}
-											{item.createdAt
-												? new Date(
-														Number(item.createdAt.seconds) * 1000,
-													).toLocaleString()
-												: "N/A"}
-										</p>
-									</div>
-									<div className="flex gap-2">
-										<button
-											onClick={() => handleEdit(item)}
-											className="text-indigo-600 hover:text-indigo-900 px-3 py-1"
-										>
-											Edit
-										</button>
-										<button
-											onClick={() => handleDelete(item.id)}
-											className="text-red-600 hover:text-red-900 px-3 py-1"
-										>
-											Delete
-										</button>
-									</div>
+									)}
 								</div>
-							</li>
-						))}
-						{items.length === 0 && (
-							<li className="px-6 py-8 text-center text-gray-500">
-								No items yet. Create your first item!
-							</li>
-						)}
-					</ul>
+							</Card.Content>
+
+							<Card.Footer className="gap-2">
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => handleEdit(item)}
+									className="flex-1"
+								>
+									<Pencil className="h-3 w-3 mr-1" />
+									Edit
+								</Button>
+								<Button
+									variant="destructive"
+									size="sm"
+									onClick={() => handleDelete(item.id)}
+									className="flex-1"
+								>
+									<Trash2 className="h-3 w-3 mr-1" />
+									Delete
+								</Button>
+							</Card.Footer>
+						</Card>
+					))}
 				</div>
 			)}
 		</div>

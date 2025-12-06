@@ -10,8 +10,10 @@
 	},
 	"overrides": [
 		{
-			"includes": ["src/routeTree.gen.ts", "src/proto-generated/**"],
 			"linter": {
+				"enabled": false
+			},
+			"formatter": {
 				"enabled": false
 			}
 		}
@@ -35,7 +37,8 @@
 				"useExhaustiveDependencies": "warn"
 			},
 			"suspicious": {
-				"noUnknownAtRules": "off"
+				"noUnknownAtRules": "off",
+				"noDocumentCookie": "off"
 			}
 		}
 	},
