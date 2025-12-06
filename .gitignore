@@ -6,7 +6,9 @@
 *.dylib
 *.test
 *.out
-go.work
+
+# Go binaries
+server/server
 
 # Node
 **/node_modules/
