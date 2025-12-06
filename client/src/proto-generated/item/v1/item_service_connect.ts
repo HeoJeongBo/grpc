@@ -3,12 +3,10 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateItemRequest, CreateItemResponse, DeleteItemRequest, DeleteItemResponse, GetItemRequest, GetItemResponse, ListItemsRequest, ListItemsResponse, UpdateItemRequest, UpdateItemResponse, WatchItemsRequest, WatchItemsResponse } from "./item_pb";
+import { CreateItemRequest, CreateItemResponse, DeleteItemRequest, DeleteItemResponse, GetItemRequest, GetItemResponse, ListItemsRequest, ListItemsResponse, UpdateItemRequest, UpdateItemResponse, WatchItemsRequest, WatchItemsResponse } from "./item_service_pb";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
- * ItemService provides CRUD operations for items
- *
  * @generated from service item.v1.ItemService
  */
 export const ItemService = {
@@ -60,8 +58,6 @@ export const ItemService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Server streaming: Watch item changes in real-time
-     *
      * @generated from rpc item.v1.ItemService.WatchItems
      */
     watchItems: {

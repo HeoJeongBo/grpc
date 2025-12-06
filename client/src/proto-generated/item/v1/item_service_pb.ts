@@ -2,20 +2,247 @@
 // @generated from file item/v1/item_service.proto (package item.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenService } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
-import type { CreateItemRequestSchema, CreateItemResponseSchema, DeleteItemRequestSchema, DeleteItemResponseSchema, GetItemRequestSchema, GetItemResponseSchema, ListItemsRequestSchema, ListItemsResponseSchema, UpdateItemRequestSchema, UpdateItemResponseSchema, WatchItemsRequestSchema, WatchItemsResponseSchema } from "./item_pb";
+import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { Item } from "./item_pb";
 import { file_item_v1_item } from "./item_pb";
+import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file item/v1/item_service.proto.
  */
 export const file_item_v1_item_service: GenFile = /*@__PURE__*/
-  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MTK5AwoLSXRlbVNlcnZpY2USRwoKQ3JlYXRlSXRlbRIaLml0ZW0udjEuQ3JlYXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXNwb25zZSIAEj4KB0dldEl0ZW0SFy5pdGVtLnYxLkdldEl0ZW1SZXF1ZXN0GhguaXRlbS52MS5HZXRJdGVtUmVzcG9uc2UiABJECglMaXN0SXRlbXMSGS5pdGVtLnYxLkxpc3RJdGVtc1JlcXVlc3QaGi5pdGVtLnYxLkxpc3RJdGVtc1Jlc3BvbnNlIgASRwoKVXBkYXRlSXRlbRIaLml0ZW0udjEuVXBkYXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXNwb25zZSIAEkcKCkRlbGV0ZUl0ZW0SGi5pdGVtLnYxLkRlbGV0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5EZWxldGVJdGVtUmVzcG9uc2UiABJJCgpXYXRjaEl0ZW1zEhouaXRlbS52MS5XYXRjaEl0ZW1zUmVxdWVzdBobLml0ZW0udjEuV2F0Y2hJdGVtc1Jlc3BvbnNlIgAwAUKeAQoLY29tLml0ZW0udjFCEEl0ZW1TZXJ2aWNlUHJvdG9QAVpAZ2l0aHViLmNvbS9oZW9qZW9uZ2JvL2dycGMvc2VydmVyL3Byb3RvLWdlbmVyYXRlZC9pdGVtL3YxO2l0ZW12MaICA0lYWKoCB0l0ZW0uVjHKAgdJdGVtXFYx4gITSXRlbVxWMVxHUEJNZXRhZGF0YeoCCEl0ZW06OlYxYgZwcm90bzM", [file_item_v1_item]);
+  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MSI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlIhMKEVdhdGNoSXRlbXNSZXF1ZXN0IkUKEldhdGNoSXRlbXNSZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtEhIKCmV2ZW50X3R5cGUYAiABKAkyuQMKC0l0ZW1TZXJ2aWNlEkcKCkNyZWF0ZUl0ZW0SGi5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5DcmVhdGVJdGVtUmVzcG9uc2UiABI+CgdHZXRJdGVtEhcuaXRlbS52MS5HZXRJdGVtUmVxdWVzdBoYLml0ZW0udjEuR2V0SXRlbVJlc3BvbnNlIgASRAoJTGlzdEl0ZW1zEhkuaXRlbS52MS5MaXN0SXRlbXNSZXF1ZXN0GhouaXRlbS52MS5MaXN0SXRlbXNSZXNwb25zZSIAEkcKClVwZGF0ZUl0ZW0SGi5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5VcGRhdGVJdGVtUmVzcG9uc2UiABJHCgpEZWxldGVJdGVtEhouaXRlbS52MS5EZWxldGVJdGVtUmVxdWVzdBobLml0ZW0udjEuRGVsZXRlSXRlbVJlc3BvbnNlIgASSQoKV2F0Y2hJdGVtcxIaLml0ZW0udjEuV2F0Y2hJdGVtc1JlcXVlc3QaGy5pdGVtLnYxLldhdGNoSXRlbXNSZXNwb25zZSIAMAFCngEKC2NvbS5pdGVtLnYxQhBJdGVtU2VydmljZVByb3RvUAFaQGdpdGh1Yi5jb20vaGVvamVvbmdiby9ncnBjL3NlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbS92MTtpdGVtdjGiAgNJWFiqAgdJdGVtLlYxygIHSXRlbVxWMeICE0l0ZW1cVjFcR1BCTWV0YWRhdGHqAghJdGVtOjpWMWIGcHJvdG8z", [file_item_v1_item]);
 
 /**
- * ItemService provides CRUD operations for items
- *
+ * @generated from message item.v1.CreateItemRequest
+ */
+export type CreateItemRequest = Message<"item.v1.CreateItemRequest"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+};
+
+/**
+ * Describes the message item.v1.CreateItemRequest.
+ * Use `create(CreateItemRequestSchema)` to create a new message.
+ */
+export const CreateItemRequestSchema: GenMessage<CreateItemRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 0);
+
+/**
+ * @generated from message item.v1.CreateItemResponse
+ */
+export type CreateItemResponse = Message<"item.v1.CreateItemResponse"> & {
+  /**
+   * @generated from field: item.v1.Item item = 1;
+   */
+  item?: Item;
+};
+
+/**
+ * Describes the message item.v1.CreateItemResponse.
+ * Use `create(CreateItemResponseSchema)` to create a new message.
+ */
+export const CreateItemResponseSchema: GenMessage<CreateItemResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 1);
+
+/**
+ * @generated from message item.v1.GetItemRequest
+ */
+export type GetItemRequest = Message<"item.v1.GetItemRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+};
+
+/**
+ * Describes the message item.v1.GetItemRequest.
+ * Use `create(GetItemRequestSchema)` to create a new message.
+ */
+export const GetItemRequestSchema: GenMessage<GetItemRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 2);
+
+/**
+ * @generated from message item.v1.GetItemResponse
+ */
+export type GetItemResponse = Message<"item.v1.GetItemResponse"> & {
+  /**
+   * @generated from field: item.v1.Item item = 1;
+   */
+  item?: Item;
+};
+
+/**
+ * Describes the message item.v1.GetItemResponse.
+ * Use `create(GetItemResponseSchema)` to create a new message.
+ */
+export const GetItemResponseSchema: GenMessage<GetItemResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 3);
+
+/**
+ * @generated from message item.v1.ListItemsRequest
+ */
+export type ListItemsRequest = Message<"item.v1.ListItemsRequest"> & {
+  /**
+   * @generated from field: int32 page_size = 1;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 2;
+   */
+  pageToken: string;
+};
+
+/**
+ * Describes the message item.v1.ListItemsRequest.
+ * Use `create(ListItemsRequestSchema)` to create a new message.
+ */
+export const ListItemsRequestSchema: GenMessage<ListItemsRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 4);
+
+/**
+ * @generated from message item.v1.ListItemsResponse
+ */
+export type ListItemsResponse = Message<"item.v1.ListItemsResponse"> & {
+  /**
+   * @generated from field: repeated item.v1.Item items = 1;
+   */
+  items: Item[];
+
+  /**
+   * @generated from field: string next_page_token = 2;
+   */
+  nextPageToken: string;
+};
+
+/**
+ * Describes the message item.v1.ListItemsResponse.
+ * Use `create(ListItemsResponseSchema)` to create a new message.
+ */
+export const ListItemsResponseSchema: GenMessage<ListItemsResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 5);
+
+/**
+ * @generated from message item.v1.UpdateItemRequest
+ */
+export type UpdateItemRequest = Message<"item.v1.UpdateItemRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description: string;
+};
+
+/**
+ * Describes the message item.v1.UpdateItemRequest.
+ * Use `create(UpdateItemRequestSchema)` to create a new message.
+ */
+export const UpdateItemRequestSchema: GenMessage<UpdateItemRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 6);
+
+/**
+ * @generated from message item.v1.UpdateItemResponse
+ */
+export type UpdateItemResponse = Message<"item.v1.UpdateItemResponse"> & {
+  /**
+   * @generated from field: item.v1.Item item = 1;
+   */
+  item?: Item;
+};
+
+/**
+ * Describes the message item.v1.UpdateItemResponse.
+ * Use `create(UpdateItemResponseSchema)` to create a new message.
+ */
+export const UpdateItemResponseSchema: GenMessage<UpdateItemResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 7);
+
+/**
+ * @generated from message item.v1.DeleteItemRequest
+ */
+export type DeleteItemRequest = Message<"item.v1.DeleteItemRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+};
+
+/**
+ * Describes the message item.v1.DeleteItemRequest.
+ * Use `create(DeleteItemRequestSchema)` to create a new message.
+ */
+export const DeleteItemRequestSchema: GenMessage<DeleteItemRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 8);
+
+/**
+ * @generated from message item.v1.DeleteItemResponse
+ */
+export type DeleteItemResponse = Message<"item.v1.DeleteItemResponse"> & {
+};
+
+/**
+ * Describes the message item.v1.DeleteItemResponse.
+ * Use `create(DeleteItemResponseSchema)` to create a new message.
+ */
+export const DeleteItemResponseSchema: GenMessage<DeleteItemResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 9);
+
+/**
+ * @generated from message item.v1.WatchItemsRequest
+ */
+export type WatchItemsRequest = Message<"item.v1.WatchItemsRequest"> & {
+};
+
+/**
+ * Describes the message item.v1.WatchItemsRequest.
+ * Use `create(WatchItemsRequestSchema)` to create a new message.
+ */
+export const WatchItemsRequestSchema: GenMessage<WatchItemsRequest> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 10);
+
+/**
+ * @generated from message item.v1.WatchItemsResponse
+ */
+export type WatchItemsResponse = Message<"item.v1.WatchItemsResponse"> & {
+  /**
+   * @generated from field: item.v1.Item item = 1;
+   */
+  item?: Item;
+
+  /**
+   * "CREATED", "UPDATED", "DELETED"
+   *
+   * @generated from field: string event_type = 2;
+   */
+  eventType: string;
+};
+
+/**
+ * Describes the message item.v1.WatchItemsResponse.
+ * Use `create(WatchItemsResponseSchema)` to create a new message.
+ */
+export const WatchItemsResponseSchema: GenMessage<WatchItemsResponse> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 11);
+
+/**
  * @generated from service item.v1.ItemService
  */
 export const ItemService: GenService<{
@@ -60,8 +287,6 @@ export const ItemService: GenService<{
     output: typeof DeleteItemResponseSchema;
   },
   /**
-   * Server streaming: Watch item changes in real-time
-   *
    * @generated from rpc item.v1.ItemService.WatchItems
    */
   watchItems: {

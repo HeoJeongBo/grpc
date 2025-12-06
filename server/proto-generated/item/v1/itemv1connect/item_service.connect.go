@@ -54,7 +54,6 @@ type ItemServiceClient interface {
 	ListItems(context.Context, *connect.Request[v1.ListItemsRequest]) (*connect.Response[v1.ListItemsResponse], error)
 	UpdateItem(context.Context, *connect.Request[v1.UpdateItemRequest]) (*connect.Response[v1.UpdateItemResponse], error)
 	DeleteItem(context.Context, *connect.Request[v1.DeleteItemRequest]) (*connect.Response[v1.DeleteItemResponse], error)
-	// Server streaming: Watch item changes in real-time
 	WatchItems(context.Context, *connect.Request[v1.WatchItemsRequest]) (*connect.ServerStreamForClient[v1.WatchItemsResponse], error)
 }
 
@@ -155,7 +154,6 @@ type ItemServiceHandler interface {
 	ListItems(context.Context, *connect.Request[v1.ListItemsRequest]) (*connect.Response[v1.ListItemsResponse], error)
 	UpdateItem(context.Context, *connect.Request[v1.UpdateItemRequest]) (*connect.Response[v1.UpdateItemResponse], error)
 	DeleteItem(context.Context, *connect.Request[v1.DeleteItemRequest]) (*connect.Response[v1.DeleteItemResponse], error)
-	// Server streaming: Watch item changes in real-time
 	WatchItems(context.Context, *connect.Request[v1.WatchItemsRequest], *connect.ServerStream[v1.WatchItemsResponse]) error
 }
 

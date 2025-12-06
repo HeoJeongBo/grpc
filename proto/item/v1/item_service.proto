@@ -6,13 +6,61 @@ option go_package = "github.com/heojeongbo/grpc/gen/item/v1;itemv1";
 
 import "item/v1/item.proto";
 
-// ItemService provides CRUD operations for items
 service ItemService {
   rpc CreateItem(CreateItemRequest) returns (CreateItemResponse) {}
   rpc GetItem(GetItemRequest) returns (GetItemResponse) {}
   rpc ListItems(ListItemsRequest) returns (ListItemsResponse) {}
   rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse) {}
   rpc DeleteItem(DeleteItemRequest) returns (DeleteItemResponse) {}
-  // Server streaming: Watch item changes in real-time
   rpc WatchItems(WatchItemsRequest) returns (stream WatchItemsResponse) {}
+}
+
+message CreateItemRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message CreateItemResponse {
+  Item item = 1;
+}
+
+message GetItemRequest {
+  string id = 1;
+}
+
+message GetItemResponse {
+  Item item = 1;
+}
+
+message ListItemsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListItemsResponse {
+  repeated Item items = 1;
+  string next_page_token = 2;
+}
+
+message UpdateItemRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message UpdateItemResponse {
+  Item item = 1;
+}
+
+message DeleteItemRequest {
+  string id = 1;
+}
+
+message DeleteItemResponse {}
+
+message WatchItemsRequest {}
+
+message WatchItemsResponse {
+  Item item = 1;
+  string event_type = 2; // "CREATED", "UPDATED", "DELETED"
 }
