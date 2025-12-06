@@ -27,8 +27,8 @@ function Items() {
 	};
 
 	useEffect(() => {
-		loadItems();
-	}, [loadItems]);
+		loadItems()
+	}, [])
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();

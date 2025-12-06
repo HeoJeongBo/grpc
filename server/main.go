@@ -22,7 +22,14 @@ func main() {
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders: []string{"*"},
+		AllowedHeaders: []string{
+			"*",
+			"Connect-Protocol-Version",
+			"Content-Type",
+		},
+		ExposedHeaders: []string{
+			"Connect-Protocol-Version",
+		},
 	}).Handler(mux)
 
 	addr := ":8080"
