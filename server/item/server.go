@@ -88,6 +88,7 @@ func (s *Server) UpdateItem(
 	defer s.mu.Unlock()
 
 	item, exists := s.items[req.Msg.Id]
+
 	if !exists {
 		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
 	}
