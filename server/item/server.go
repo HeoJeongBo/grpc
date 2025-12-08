@@ -30,11 +30,17 @@ func (s *Server) CreateItem(
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	status := req.Msg.Status
+	if status == itemv1.ItemStatus_ITEM_STATUS_UNSPECIFIED {
+		status = itemv1.ItemStatus_ITEM_STATUS_DRAFT
+	}
+
 	now := timestamppb.New(time.Now())
 	item := &itemv1.Item{
 		Id:          uuid.New().String(),
 		Name:        req.Msg.Name,
 		Description: req.Msg.Description,
+		Status:      status,
 		CreatedAt:   now,
 		UpdatedAt:   now,
 	}
@@ -70,13 +76,18 @@ func (s *Server) ListItems(
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	items := make([]*itemv1.Item, 0, len(s.items))
+	allItems := make([]*itemv1.Item, 0, len(s.items))
+
 	for _, item := range s.items {
-		items = append(items, item)
+		allItems = append(allItems, item)
 	}
 
+	filter := ApplyItemFilters(req.Msg.Filters)
+	filteredItems := FilterItems(allItems, filter)
+
 	return connect.NewResponse(&itemv1.ListItemsResponse{
-		Items: items,
+		Items:      filteredItems,
+		TotalCount: int32(len(filteredItems)),
 	}), nil
 }
 
@@ -93,8 +104,18 @@ func (s *Server) UpdateItem(
 		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
 	}
 
-	item.Name = req.Msg.Name
-	item.Description = req.Msg.Description
+	if req.Msg.Name != nil {
+		item.Name = *req.Msg.Name
+	}
+
+	if req.Msg.Description != nil {
+		item.Description = *req.Msg.Description
+	}
+
+	if req.Msg.Status != nil {
+		item.Status = *req.Msg.Status
+	}
+
 	item.UpdatedAt = timestamppb.New(time.Now())
 
 	return connect.NewResponse(&itemv1.UpdateItemResponse{
