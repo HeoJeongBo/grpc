@@ -1,48 +1,46 @@
+import { useMutation, useQuery } from "@connectrpc/connect-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Card, Dialog, Input, Textarea } from "@/components/ui";
-import { itemClient } from "@/lib/client";
 import type { Item } from "@/proto-generated/item/v1/item_pb";
+import {
+	createItem,
+	deleteItem,
+	listItems,
+	updateItem,
+} from "@/proto-generated/item/v1/item_service-ItemService_connectquery";
 
 export const Route = createFileRoute("/items")({
 	component: Items,
 });
 
 function Items() {
-	const [items, setItems] = useState<Item[]>([]);
-	const [loading, setLoading] = useState(false);
+	const { data, isLoading, refetch } = useQuery(listItems, {});
+
+	const updateMutation = useMutation(updateItem);
+
+	const createMutation = useMutation(createItem);
+
+	const deleteMutation = useMutation(deleteItem);
+
 	const [showDialog, setShowDialog] = useState(false);
 	const [editingItem, setEditingItem] = useState<Item | null>(null);
 	const [formData, setFormData] = useState({ name: "", description: "" });
 
-	const loadItems = useCallback(async () => {
-		setLoading(true);
-		try {
-			const response = await itemClient.listItems({});
-			setItems(response.items || []);
-		} catch (error) {
-			console.error("Failed to load items:", error);
-		} finally {
-			setLoading(false);
-		}
-	}, []);
-
-	useEffect(() => {
-		loadItems();
-	}, [loadItems]);
+	const items = data?.items || [];
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			if (editingItem) {
-				await itemClient.updateItem({
+				await updateMutation.mutateAsync({
 					id: editingItem.id,
 					name: formData.name,
 					description: formData.description,
 				});
 			} else {
-				await itemClient.createItem({
+				await createMutation.mutateAsync({
 					name: formData.name,
 					description: formData.description,
 				});
@@ -50,7 +48,7 @@ function Items() {
 			setFormData({ name: "", description: "" });
 			setEditingItem(null);
 			setShowDialog(false);
-			loadItems();
+			refetch();
 		} catch (error) {
 			console.error("Failed to save item:", error);
 		}
@@ -65,8 +63,8 @@ function Items() {
 	const handleDelete = async (id: string) => {
 		if (!confirm("Are you sure you want to delete this item?")) return;
 		try {
-			await itemClient.deleteItem({ id });
-			loadItems();
+			await deleteMutation.mutateAsync({ id });
+			refetch();
 		} catch (error) {
 			console.error("Failed to delete item:", error);
 		}
@@ -149,7 +147,7 @@ function Items() {
 			</Dialog>
 
 			{/* Items List */}
-			{loading ? (
+			{isLoading ? (
 				<div className="flex items-center justify-center py-12">
 					<div className="text-muted-foreground">Loading...</div>
 				</div>

@@ -25,5 +25,10 @@ plugins:
     opt:
       - target=ts
       - import_extension=none
+  - local: client/node_modules/.bin/protoc-gen-connect-query
+    out: client/src/proto-generated
+    opt:
+      - target=ts
+      - import_extension=none
 inputs:
   - directory: proto
