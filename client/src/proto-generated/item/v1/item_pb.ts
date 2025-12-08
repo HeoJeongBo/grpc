@@ -2,8 +2,8 @@
 // @generated from file item/v1/item.proto (package item.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,9 +12,11 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/v1/item.proto.
  */
 export const file_item_v1_item: GenFile = /*@__PURE__*/
-  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEilQEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEKXAQoLY29tLml0ZW0udjFCCUl0ZW1Qcm90b1ABWkBnaXRodWIuY29tL2hlb2plb25nYm8vZ3JwYy9zZXJ2ZXIvcHJvdG8tZ2VuZXJhdGVkL2l0ZW0vdjE7aXRlbXYxogIDSVhYqgIHSXRlbS5WMcoCB0l0ZW1cVjHiAhNJdGVtXFYxXEdQQk1ldGFkYXRh6gIISXRlbTo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
+  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEiugEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIjCgZzdGF0dXMYBiABKA4yEy5pdGVtLnYxLkl0ZW1TdGF0dXMqiwEKCkl0ZW1TdGF0dXMSGwoXSVRFTV9TVEFUVVNfVU5TUEVDSUZJRUQQABIVChFJVEVNX1NUQVRVU19EUkFGVBABEhYKEklURU1fU1RBVFVTX0FDVElWRRACEhgKFElURU1fU1RBVFVTX0FSQ0hJVkVEEAMSFwoTSVRFTV9TVEFUVVNfREVMRVRFRBAEQpcBCgtjb20uaXRlbS52MUIJSXRlbVByb3RvUAFaQGdpdGh1Yi5jb20vaGVvamVvbmdiby9ncnBjL3NlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbS92MTtpdGVtdjGiAgNJWFiqAgdJdGVtLlYxygIHSXRlbVxWMeICE0l0ZW1cVjFcR1BCTWV0YWRhdGHqAghJdGVtOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp]);
 
 /**
+ * Item represents the core domain model for an item
+ *
  * @generated from message item.v1.Item
  */
 export type Item = Message<"item.v1.Item"> & {
@@ -42,6 +44,11 @@ export type Item = Message<"item.v1.Item"> & {
    * @generated from field: google.protobuf.Timestamp updated_at = 5;
    */
   updatedAt?: Timestamp;
+
+  /**
+   * @generated from field: item.v1.ItemStatus status = 6;
+   */
+  status: ItemStatus;
 };
 
 /**
@@ -50,4 +57,42 @@ export type Item = Message<"item.v1.Item"> & {
  */
 export const ItemSchema: GenMessage<Item> = /*@__PURE__*/
   messageDesc(file_item_v1_item, 0);
+
+/**
+ * ItemStatus represents the current state of an item
+ *
+ * @generated from enum item.v1.ItemStatus
+ */
+export enum ItemStatus {
+  /**
+   * @generated from enum value: ITEM_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: ITEM_STATUS_DRAFT = 1;
+   */
+  DRAFT = 1,
+
+  /**
+   * @generated from enum value: ITEM_STATUS_ACTIVE = 2;
+   */
+  ACTIVE = 2,
+
+  /**
+   * @generated from enum value: ITEM_STATUS_ARCHIVED = 3;
+   */
+  ARCHIVED = 3,
+
+  /**
+   * @generated from enum value: ITEM_STATUS_DELETED = 4;
+   */
+  DELETED = 4,
+}
+
+/**
+ * Describes the enum item.v1.ItemStatus.
+ */
+export const ItemStatusSchema: GenEnum<ItemStatus> = /*@__PURE__*/
+  enumDesc(file_item_v1_item, 0);
 

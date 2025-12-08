@@ -4,7 +4,7 @@
 
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
-import type { Item } from "./item_pb";
+import type { Item, ItemStatus } from "./item_pb";
 import { file_item_v1_item } from "./item_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,7 +12,50 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/v1/item_service.proto.
  */
 export const file_item_v1_item_service: GenFile = /*@__PURE__*/
-  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MSI2ChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIjkKEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkiSgoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIkIKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiMQoSVXBkYXRlSXRlbVJlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0iHwoRRGVsZXRlSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFAoSRGVsZXRlSXRlbVJlc3BvbnNlIhMKEVdhdGNoSXRlbXNSZXF1ZXN0IkUKEldhdGNoSXRlbXNSZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtEhIKCmV2ZW50X3R5cGUYAiABKAkyuQMKC0l0ZW1TZXJ2aWNlEkcKCkNyZWF0ZUl0ZW0SGi5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5DcmVhdGVJdGVtUmVzcG9uc2UiABI+CgdHZXRJdGVtEhcuaXRlbS52MS5HZXRJdGVtUmVxdWVzdBoYLml0ZW0udjEuR2V0SXRlbVJlc3BvbnNlIgASRAoJTGlzdEl0ZW1zEhkuaXRlbS52MS5MaXN0SXRlbXNSZXF1ZXN0GhouaXRlbS52MS5MaXN0SXRlbXNSZXNwb25zZSIAEkcKClVwZGF0ZUl0ZW0SGi5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5VcGRhdGVJdGVtUmVzcG9uc2UiABJHCgpEZWxldGVJdGVtEhouaXRlbS52MS5EZWxldGVJdGVtUmVxdWVzdBobLml0ZW0udjEuRGVsZXRlSXRlbVJlc3BvbnNlIgASSQoKV2F0Y2hJdGVtcxIaLml0ZW0udjEuV2F0Y2hJdGVtc1JlcXVlc3QaGy5pdGVtLnYxLldhdGNoSXRlbXNSZXNwb25zZSIAMAFCngEKC2NvbS5pdGVtLnYxQhBJdGVtU2VydmljZVByb3RvUAFaQGdpdGh1Yi5jb20vaGVvamVvbmdiby9ncnBjL3NlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbS92MTtpdGVtdjGiAgNJWFiqAgdJdGVtLlYxygIHSXRlbVxWMeICE0l0ZW1cVjFcR1BCTWV0YWRhdGHqAghJdGVtOjpWMWIGcHJvdG8z", [file_item_v1_item]);
+  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MSKMAQoKSXRlbUZpbHRlchIRCgRuYW1lGAEgASgJSACIAQESGAoLZGVzY3JpcHRpb24YAiABKAlIAYgBARIlCghzdGF0dXNlcxgDIAMoDjITLml0ZW0udjEuSXRlbVN0YXR1cxILCgNpZHMYBCADKAlCBwoFX25hbWVCDgoMX2Rlc2NyaXB0aW9uSgQIBRAVIlsKEUNyZWF0ZUl0ZW1SZXF1ZXN0EgwKBG5hbWUYASABKAkSEwoLZGVzY3JpcHRpb24YAiABKAkSIwoGc3RhdHVzGAMgASgOMhMuaXRlbS52MS5JdGVtU3RhdHVzIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIl8KEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkSJAoHZmlsdGVycxgDIAMoCzITLml0ZW0udjEuSXRlbUZpbHRlciJfChFMaXN0SXRlbXNSZXNwb25zZRIcCgVpdGVtcxgBIAMoCzINLml0ZW0udjEuSXRlbRIXCg9uZXh0X3BhZ2VfdG9rZW4YAiABKAkSEwoLdG90YWxfY291bnQYAyABKAUimgEKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEhEKBG5hbWUYAiABKAlIAIgBARIYCgtkZXNjcmlwdGlvbhgDIAEoCUgBiAEBEigKBnN0YXR1cxgEIAEoDjITLml0ZW0udjEuSXRlbVN0YXR1c0gCiAEBQgcKBV9uYW1lQg4KDF9kZXNjcmlwdGlvbkIJCgdfc3RhdHVzIjEKElVwZGF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIh8KEURlbGV0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIhQKEkRlbGV0ZUl0ZW1SZXNwb25zZSITChFXYXRjaEl0ZW1zUmVxdWVzdCJFChJXYXRjaEl0ZW1zUmVzcG9uc2USGwoEaXRlbRgBIAEoCzINLml0ZW0udjEuSXRlbRISCgpldmVudF90eXBlGAIgASgJMrkDCgtJdGVtU2VydmljZRJHCgpDcmVhdGVJdGVtEhouaXRlbS52MS5DcmVhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuQ3JlYXRlSXRlbVJlc3BvbnNlIgASPgoHR2V0SXRlbRIXLml0ZW0udjEuR2V0SXRlbVJlcXVlc3QaGC5pdGVtLnYxLkdldEl0ZW1SZXNwb25zZSIAEkQKCUxpc3RJdGVtcxIZLml0ZW0udjEuTGlzdEl0ZW1zUmVxdWVzdBoaLml0ZW0udjEuTGlzdEl0ZW1zUmVzcG9uc2UiABJHCgpVcGRhdGVJdGVtEhouaXRlbS52MS5VcGRhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuVXBkYXRlSXRlbVJlc3BvbnNlIgASRwoKRGVsZXRlSXRlbRIaLml0ZW0udjEuRGVsZXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLkRlbGV0ZUl0ZW1SZXNwb25zZSIAEkkKCldhdGNoSXRlbXMSGi5pdGVtLnYxLldhdGNoSXRlbXNSZXF1ZXN0GhsuaXRlbS52MS5XYXRjaEl0ZW1zUmVzcG9uc2UiADABQp4BCgtjb20uaXRlbS52MUIQSXRlbVNlcnZpY2VQcm90b1ABWkBnaXRodWIuY29tL2hlb2plb25nYm8vZ3JwYy9zZXJ2ZXIvcHJvdG8tZ2VuZXJhdGVkL2l0ZW0vdjE7aXRlbXYxogIDSVhYqgIHSXRlbS5WMcoCB0l0ZW1cVjHiAhNJdGVtXFYxXEdQQk1ldGFkYXRh6gIISXRlbTo6VjFiBnByb3RvMw", [file_item_v1_item]);
+
+/**
+ * ItemFilter provides flexible filtering options for items
+ * New filters can be added without breaking existing clients
+ *
+ * @generated from message item.v1.ItemFilter
+ */
+export type ItemFilter = Message<"item.v1.ItemFilter"> & {
+  /**
+   * Filter by name (partial match, case-insensitive)
+   *
+   * @generated from field: optional string name = 1;
+   */
+  name?: string;
+
+  /**
+   * Filter by description (partial match, case-insensitive)
+   *
+   * @generated from field: optional string description = 2;
+   */
+  description?: string;
+
+  /**
+   * Filter by status (exact match, can specify multiple)
+   *
+   * @generated from field: repeated item.v1.ItemStatus statuses = 3;
+   */
+  statuses: ItemStatus[];
+
+  /**
+   * Filter by ID (exact match, can specify multiple)
+   *
+   * @generated from field: repeated string ids = 4;
+   */
+  ids: string[];
+};
+
+/**
+ * Describes the message item.v1.ItemFilter.
+ * Use `create(ItemFilterSchema)` to create a new message.
+ */
+export const ItemFilterSchema: GenMessage<ItemFilter> = /*@__PURE__*/
+  messageDesc(file_item_v1_item_service, 0);
 
 /**
  * @generated from message item.v1.CreateItemRequest
@@ -27,6 +70,11 @@ export type CreateItemRequest = Message<"item.v1.CreateItemRequest"> & {
    * @generated from field: string description = 2;
    */
   description: string;
+
+  /**
+   * @generated from field: item.v1.ItemStatus status = 3;
+   */
+  status: ItemStatus;
 };
 
 /**
@@ -34,7 +82,7 @@ export type CreateItemRequest = Message<"item.v1.CreateItemRequest"> & {
  * Use `create(CreateItemRequestSchema)` to create a new message.
  */
 export const CreateItemRequestSchema: GenMessage<CreateItemRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 0);
+  messageDesc(file_item_v1_item_service, 1);
 
 /**
  * @generated from message item.v1.CreateItemResponse
@@ -51,7 +99,7 @@ export type CreateItemResponse = Message<"item.v1.CreateItemResponse"> & {
  * Use `create(CreateItemResponseSchema)` to create a new message.
  */
 export const CreateItemResponseSchema: GenMessage<CreateItemResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 1);
+  messageDesc(file_item_v1_item_service, 2);
 
 /**
  * @generated from message item.v1.GetItemRequest
@@ -68,7 +116,7 @@ export type GetItemRequest = Message<"item.v1.GetItemRequest"> & {
  * Use `create(GetItemRequestSchema)` to create a new message.
  */
 export const GetItemRequestSchema: GenMessage<GetItemRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 2);
+  messageDesc(file_item_v1_item_service, 3);
 
 /**
  * @generated from message item.v1.GetItemResponse
@@ -85,7 +133,7 @@ export type GetItemResponse = Message<"item.v1.GetItemResponse"> & {
  * Use `create(GetItemResponseSchema)` to create a new message.
  */
 export const GetItemResponseSchema: GenMessage<GetItemResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 3);
+  messageDesc(file_item_v1_item_service, 4);
 
 /**
  * @generated from message item.v1.ListItemsRequest
@@ -100,6 +148,13 @@ export type ListItemsRequest = Message<"item.v1.ListItemsRequest"> & {
    * @generated from field: string page_token = 2;
    */
   pageToken: string;
+
+  /**
+   * Multiple filters are combined with AND logic
+   *
+   * @generated from field: repeated item.v1.ItemFilter filters = 3;
+   */
+  filters: ItemFilter[];
 };
 
 /**
@@ -107,7 +162,7 @@ export type ListItemsRequest = Message<"item.v1.ListItemsRequest"> & {
  * Use `create(ListItemsRequestSchema)` to create a new message.
  */
 export const ListItemsRequestSchema: GenMessage<ListItemsRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 4);
+  messageDesc(file_item_v1_item_service, 5);
 
 /**
  * @generated from message item.v1.ListItemsResponse
@@ -122,6 +177,13 @@ export type ListItemsResponse = Message<"item.v1.ListItemsResponse"> & {
    * @generated from field: string next_page_token = 2;
    */
   nextPageToken: string;
+
+  /**
+   * Total items matching the filter
+   *
+   * @generated from field: int32 total_count = 3;
+   */
+  totalCount: number;
 };
 
 /**
@@ -129,7 +191,7 @@ export type ListItemsResponse = Message<"item.v1.ListItemsResponse"> & {
  * Use `create(ListItemsResponseSchema)` to create a new message.
  */
 export const ListItemsResponseSchema: GenMessage<ListItemsResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 5);
+  messageDesc(file_item_v1_item_service, 6);
 
 /**
  * @generated from message item.v1.UpdateItemRequest
@@ -141,14 +203,19 @@ export type UpdateItemRequest = Message<"item.v1.UpdateItemRequest"> & {
   id: string;
 
   /**
-   * @generated from field: string name = 2;
+   * @generated from field: optional string name = 2;
    */
-  name: string;
+  name?: string;
 
   /**
-   * @generated from field: string description = 3;
+   * @generated from field: optional string description = 3;
    */
-  description: string;
+  description?: string;
+
+  /**
+   * @generated from field: optional item.v1.ItemStatus status = 4;
+   */
+  status?: ItemStatus;
 };
 
 /**
@@ -156,7 +223,7 @@ export type UpdateItemRequest = Message<"item.v1.UpdateItemRequest"> & {
  * Use `create(UpdateItemRequestSchema)` to create a new message.
  */
 export const UpdateItemRequestSchema: GenMessage<UpdateItemRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 6);
+  messageDesc(file_item_v1_item_service, 7);
 
 /**
  * @generated from message item.v1.UpdateItemResponse
@@ -173,7 +240,7 @@ export type UpdateItemResponse = Message<"item.v1.UpdateItemResponse"> & {
  * Use `create(UpdateItemResponseSchema)` to create a new message.
  */
 export const UpdateItemResponseSchema: GenMessage<UpdateItemResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 7);
+  messageDesc(file_item_v1_item_service, 8);
 
 /**
  * @generated from message item.v1.DeleteItemRequest
@@ -190,7 +257,7 @@ export type DeleteItemRequest = Message<"item.v1.DeleteItemRequest"> & {
  * Use `create(DeleteItemRequestSchema)` to create a new message.
  */
 export const DeleteItemRequestSchema: GenMessage<DeleteItemRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 8);
+  messageDesc(file_item_v1_item_service, 9);
 
 /**
  * @generated from message item.v1.DeleteItemResponse
@@ -203,7 +270,7 @@ export type DeleteItemResponse = Message<"item.v1.DeleteItemResponse"> & {
  * Use `create(DeleteItemResponseSchema)` to create a new message.
  */
 export const DeleteItemResponseSchema: GenMessage<DeleteItemResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 9);
+  messageDesc(file_item_v1_item_service, 10);
 
 /**
  * @generated from message item.v1.WatchItemsRequest
@@ -216,7 +283,7 @@ export type WatchItemsRequest = Message<"item.v1.WatchItemsRequest"> & {
  * Use `create(WatchItemsRequestSchema)` to create a new message.
  */
 export const WatchItemsRequestSchema: GenMessage<WatchItemsRequest> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 10);
+  messageDesc(file_item_v1_item_service, 11);
 
 /**
  * @generated from message item.v1.WatchItemsResponse
@@ -240,7 +307,7 @@ export type WatchItemsResponse = Message<"item.v1.WatchItemsResponse"> & {
  * Use `create(WatchItemsResponseSchema)` to create a new message.
  */
 export const WatchItemsResponseSchema: GenMessage<WatchItemsResponse> = /*@__PURE__*/
-  messageDesc(file_item_v1_item_service, 11);
+  messageDesc(file_item_v1_item_service, 12);
 
 /**
  * @generated from service item.v1.ItemService

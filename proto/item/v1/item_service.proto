@@ -15,9 +15,19 @@ service ItemService {
   rpc WatchItems(WatchItemsRequest) returns (stream WatchItemsResponse) {}
 }
 
+message ItemFilter {
+  optional string name = 1;
+  optional string description = 2;
+  repeated ItemStatus statuses = 3;
+}
+
 message CreateItemRequest {
   string name = 1;
   string description = 2;
+  ItemStatus status = 3;
+  optional google.protobuf.Timestamp created_after = 5;
+  optional google.protobuf.Timestamp created_before = 6;
+  reserved 7 to 20;
 }
 
 message CreateItemResponse {
@@ -35,17 +45,20 @@ message GetItemResponse {
 message ListItemsRequest {
   int32 page_size = 1;
   string page_token = 2;
+  repeated ItemFilter filters = 3;
 }
 
 message ListItemsResponse {
   repeated Item items = 1;
   string next_page_token = 2;
+  int32 total_count = 3; // Total items matching the filter
 }
 
 message UpdateItemRequest {
   string id = 1;
-  string name = 2;
-  string description = 3;
+  optional string name = 2;
+  optional string description = 3;
+  optional ItemStatus status = 4;
 }
 
 message UpdateItemResponse {

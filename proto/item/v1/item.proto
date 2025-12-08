@@ -6,10 +6,19 @@ option go_package = "github.com/heojeongbo/grpc/gen/item/v1;itemv1";
 
 import "google/protobuf/timestamp.proto";
 
+enum ItemStatus {
+  ITEM_STATUS_UNSPECIFIED = 0;
+  ITEM_STATUS_DRAFT = 1;
+  ITEM_STATUS_ACTIVE = 2;
+  ITEM_STATUS_ARCHIVED = 3;
+  ITEM_STATUS_DELETED = 4;
+}
+
 message Item {
   string id = 1;
   string name = 2;
   string description = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
+  ItemStatus status = 6;
 }
