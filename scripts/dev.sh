@@ -12,6 +12,14 @@ trap cleanup EXIT INT TERM
 echo "🚀 Starting development servers..."
 echo ""
 
+# Start PostgreSQL database
+echo "🗄️  Starting PostgreSQL database..."
+./scripts/start-db.sh
+
+# Wait for database to be ready
+sleep 2
+echo ""
+
 # Start Go server
 echo "📦 Starting Go server on :8080..."
 cd server && go run main.go &

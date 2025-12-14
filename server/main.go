@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/heojeongbo/grpc/server/database"
 	"github.com/heojeongbo/grpc/server/item"
 	"github.com/heojeongbo/grpc/server/proto-generated/item/v1/itemv1connect"
 	"github.com/rs/cors"
@@ -12,13 +13,20 @@ import (
 )
 
 func main() {
-	server := item.NewServer()
+	connString := "host=localhost port=5432 user=postgres password=postgres dbname=grpc_dev sslmode=disable"
+
+	db, err := database.New(connString)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer db.Close()
+
+	server := item.NewServer(db)
 	mux := http.NewServeMux()
 
 	path, handler := itemv1connect.NewItemServiceHandler(server)
 	mux.Handle(path, handler)
 
-	// Setup CORS
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},

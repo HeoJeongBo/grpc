@@ -3,23 +3,23 @@ package item
 import (
 	"context"
 	"fmt"
-	"sync"
 	"time"
 
 	"connectrpc.com/connect"
-	"github.com/google/uuid"
+	"github.com/heojeongbo/grpc/server/database"
+	"github.com/heojeongbo/grpc/server/ent"
+	"github.com/heojeongbo/grpc/server/ent/item"
 	itemv1 "github.com/heojeongbo/grpc/server/proto-generated/item/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Server struct {
-	mu    sync.RWMutex
-	items map[string]*itemv1.Item
+	db *database.DB
 }
 
-func NewServer() *Server {
+func NewServer(db *database.DB) *Server {
 	return &Server{
-		items: make(map[string]*itemv1.Item),
+		db: db,
 	}
 }
 
@@ -27,28 +27,24 @@ func (s *Server) CreateItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.CreateItemRequest],
 ) (*connect.Response[itemv1.CreateItemResponse], error) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-
 	status := req.Msg.Status
 	if status == itemv1.ItemStatus_ITEM_STATUS_UNSPECIFIED {
 		status = itemv1.ItemStatus_ITEM_STATUS_DRAFT
 	}
 
-	now := timestamppb.New(time.Now())
-	item := &itemv1.Item{
-		Id:          uuid.New().String(),
-		Name:        req.Msg.Name,
-		Description: req.Msg.Description,
-		Status:      status,
-		CreatedAt:   now,
-		UpdatedAt:   now,
+	entItem, err := s.db.Client.Item.
+		Create().
+		SetName(req.Msg.Name).
+		SetDescription(req.Msg.Description).
+		SetStatus(int32(status)).
+		Save(ctx)
+
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to create item: %w", err))
 	}
 
-	s.items[item.Id] = item
-
 	return connect.NewResponse(&itemv1.CreateItemResponse{
-		Item: item,
+		Item: entItemToProto(entItem),
 	}), nil
 }
 
@@ -56,16 +52,20 @@ func (s *Server) GetItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.GetItemRequest],
 ) (*connect.Response[itemv1.GetItemResponse], error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	entItem, err := s.db.Client.Item.
+		Query().
+		Where(item.IDEQ(req.Msg.Id)).
+		Only(ctx)
 
-	item, exists := s.items[req.Msg.Id]
-	if !exists {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to get item: %w", err))
 	}
 
 	return connect.NewResponse(&itemv1.GetItemResponse{
-		Item: item,
+		Item: entItemToProto(entItem),
 	}), nil
 }
 
@@ -73,13 +73,18 @@ func (s *Server) ListItems(
 	ctx context.Context,
 	req *connect.Request[itemv1.ListItemsRequest],
 ) (*connect.Response[itemv1.ListItemsResponse], error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	entItems, err := s.db.Client.Item.
+		Query().
+		Order(ent.Desc(item.FieldCreatedAt)).
+		All(ctx)
 
-	allItems := make([]*itemv1.Item, 0, len(s.items))
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to list items: %w", err))
+	}
 
-	for _, item := range s.items {
-		allItems = append(allItems, item)
+	allItems := make([]*itemv1.Item, 0, len(entItems))
+	for _, entItem := range entItems {
+		allItems = append(allItems, entItemToProto(entItem))
 	}
 
 	filter := ApplyItemFilters(req.Msg.Filters)
@@ -95,31 +100,31 @@ func (s *Server) UpdateItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.UpdateItemRequest],
 ) (*connect.Response[itemv1.UpdateItemResponse], error) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-
-	item, exists := s.items[req.Msg.Id]
-
-	if !exists {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
-	}
+	update := s.db.Client.Item.
+		UpdateOneID(req.Msg.Id)
 
 	if req.Msg.Name != nil {
-		item.Name = *req.Msg.Name
+		update = update.SetName(*req.Msg.Name)
 	}
 
 	if req.Msg.Description != nil {
-		item.Description = *req.Msg.Description
+		update = update.SetDescription(*req.Msg.Description)
 	}
 
 	if req.Msg.Status != nil {
-		item.Status = *req.Msg.Status
+		update = update.SetStatus(int32(*req.Msg.Status))
 	}
 
-	item.UpdatedAt = timestamppb.New(time.Now())
+	entItem, err := update.Save(ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to update item: %w", err))
+	}
 
 	return connect.NewResponse(&itemv1.UpdateItemResponse{
-		Item: item,
+		Item: entItemToProto(entItem),
 	}), nil
 }
 
@@ -127,14 +132,16 @@ func (s *Server) DeleteItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.DeleteItemRequest],
 ) (*connect.Response[itemv1.DeleteItemResponse], error) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
+	err := s.db.Client.Item.
+		DeleteOneID(req.Msg.Id).
+		Exec(ctx)
 
-	if _, exists := s.items[req.Msg.Id]; !exists {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to delete item: %w", err))
 	}
-
-	delete(s.items, req.Msg.Id)
 
 	return connect.NewResponse(&itemv1.DeleteItemResponse{}), nil
 }
@@ -144,7 +151,6 @@ func (s *Server) WatchItems(
 	req *connect.Request[itemv1.WatchItemsRequest],
 	stream *connect.ServerStream[itemv1.WatchItemsResponse],
 ) error {
-	// Demo: Send current items every 5 seconds
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 
@@ -153,17 +159,34 @@ func (s *Server) WatchItems(
 		case <-ctx.Done():
 			return nil
 		case <-ticker.C:
-			s.mu.RLock()
-			for _, item := range s.items {
+			entItems, err := s.db.Client.Item.
+				Query().
+				Order(ent.Desc(item.FieldCreatedAt)).
+				All(ctx)
+
+			if err != nil {
+				return fmt.Errorf("failed to query items: %w", err)
+			}
+
+			for _, entItem := range entItems {
 				if err := stream.Send(&itemv1.WatchItemsResponse{
-					Item:      item,
+					Item:      entItemToProto(entItem),
 					EventType: "UPDATE",
 				}); err != nil {
-					s.mu.RUnlock()
 					return err
 				}
 			}
-			s.mu.RUnlock()
 		}
+	}
+}
+
+func entItemToProto(entItem *ent.Item) *itemv1.Item {
+	return &itemv1.Item{
+		Id:          entItem.ID,
+		Name:        entItem.Name,
+		Description: entItem.Description,
+		Status:      itemv1.ItemStatus(entItem.Status),
+		CreatedAt:   timestamppb.New(entItem.CreatedAt),
+		UpdatedAt:   timestamppb.New(entItem.UpdatedAt),
 	}
 }
