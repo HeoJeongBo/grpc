@@ -1,14 +1,10 @@
 {
-	"go.goroot": "",
-	"go.gopath": "",
-	"gopls": {
-		"build.directoryFilters": ["-node_modules"],
-		"formatting.gofumpt": true
-	},
-	"go.toolsManagement.autoUpdate": true,
 	"files.exclude": {
 		"**/server/ent/**": true,
 		"**/node_modules/**": true,
 		"**/dist/**": true
+	},
+	"gopls": {
+		"vulncheck": "Imports"
 	}
 }
