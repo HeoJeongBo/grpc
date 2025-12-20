@@ -6,45 +6,36 @@ import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegen
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Item, ItemStatus } from "./item_pb";
 import { file_item_v1_item } from "./item_pb";
+import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file item/v1/item_service.proto.
  */
 export const file_item_v1_item_service: GenFile = /*@__PURE__*/
-  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MSKMAQoKSXRlbUZpbHRlchIRCgRuYW1lGAEgASgJSACIAQESGAoLZGVzY3JpcHRpb24YAiABKAlIAYgBARIlCghzdGF0dXNlcxgDIAMoDjITLml0ZW0udjEuSXRlbVN0YXR1cxILCgNpZHMYBCADKAlCBwoFX25hbWVCDgoMX2Rlc2NyaXB0aW9uSgQIBRAVIlsKEUNyZWF0ZUl0ZW1SZXF1ZXN0EgwKBG5hbWUYASABKAkSEwoLZGVzY3JpcHRpb24YAiABKAkSIwoGc3RhdHVzGAMgASgOMhMuaXRlbS52MS5JdGVtU3RhdHVzIjEKEkNyZWF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIhwKDkdldEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIi4KD0dldEl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIl8KEExpc3RJdGVtc1JlcXVlc3QSEQoJcGFnZV9zaXplGAEgASgFEhIKCnBhZ2VfdG9rZW4YAiABKAkSJAoHZmlsdGVycxgDIAMoCzITLml0ZW0udjEuSXRlbUZpbHRlciJfChFMaXN0SXRlbXNSZXNwb25zZRIcCgVpdGVtcxgBIAMoCzINLml0ZW0udjEuSXRlbRIXCg9uZXh0X3BhZ2VfdG9rZW4YAiABKAkSEwoLdG90YWxfY291bnQYAyABKAUimgEKEVVwZGF0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEhEKBG5hbWUYAiABKAlIAIgBARIYCgtkZXNjcmlwdGlvbhgDIAEoCUgBiAEBEigKBnN0YXR1cxgEIAEoDjITLml0ZW0udjEuSXRlbVN0YXR1c0gCiAEBQgcKBV9uYW1lQg4KDF9kZXNjcmlwdGlvbkIJCgdfc3RhdHVzIjEKElVwZGF0ZUl0ZW1SZXNwb25zZRIbCgRpdGVtGAEgASgLMg0uaXRlbS52MS5JdGVtIh8KEURlbGV0ZUl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJIhQKEkRlbGV0ZUl0ZW1SZXNwb25zZSITChFXYXRjaEl0ZW1zUmVxdWVzdCJFChJXYXRjaEl0ZW1zUmVzcG9uc2USGwoEaXRlbRgBIAEoCzINLml0ZW0udjEuSXRlbRISCgpldmVudF90eXBlGAIgASgJMrkDCgtJdGVtU2VydmljZRJHCgpDcmVhdGVJdGVtEhouaXRlbS52MS5DcmVhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuQ3JlYXRlSXRlbVJlc3BvbnNlIgASPgoHR2V0SXRlbRIXLml0ZW0udjEuR2V0SXRlbVJlcXVlc3QaGC5pdGVtLnYxLkdldEl0ZW1SZXNwb25zZSIAEkQKCUxpc3RJdGVtcxIZLml0ZW0udjEuTGlzdEl0ZW1zUmVxdWVzdBoaLml0ZW0udjEuTGlzdEl0ZW1zUmVzcG9uc2UiABJHCgpVcGRhdGVJdGVtEhouaXRlbS52MS5VcGRhdGVJdGVtUmVxdWVzdBobLml0ZW0udjEuVXBkYXRlSXRlbVJlc3BvbnNlIgASRwoKRGVsZXRlSXRlbRIaLml0ZW0udjEuRGVsZXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLkRlbGV0ZUl0ZW1SZXNwb25zZSIAEkkKCldhdGNoSXRlbXMSGi5pdGVtLnYxLldhdGNoSXRlbXNSZXF1ZXN0GhsuaXRlbS52MS5XYXRjaEl0ZW1zUmVzcG9uc2UiADABQp4BCgtjb20uaXRlbS52MUIQSXRlbVNlcnZpY2VQcm90b1ABWkBnaXRodWIuY29tL2hlb2plb25nYm8vZ3JwYy9zZXJ2ZXIvcHJvdG8tZ2VuZXJhdGVkL2l0ZW0vdjE7aXRlbXYxogIDSVhYqgIHSXRlbS5WMcoCB0l0ZW1cVjHiAhNJdGVtXFYxXEdQQk1ldGFkYXRh6gIISXRlbTo6VjFiBnByb3RvMw", [file_item_v1_item]);
+  fileDesc("ChppdGVtL3YxL2l0ZW1fc2VydmljZS5wcm90bxIHaXRlbS52MSKGAQoKSXRlbUZpbHRlchIRCgRuYW1lGAEgASgJSACIAQESGAoLZGVzY3JpcHRpb24YAiABKAlIAYgBARIlCghzdGF0dXNlcxgDIAMoDjITLml0ZW0udjEuSXRlbVN0YXR1cxILCgNpZHMYBCADKAlCBwoFX25hbWVCDgoMX2Rlc2NyaXB0aW9uIvcBChFDcmVhdGVJdGVtUmVxdWVzdBIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJEiMKBnN0YXR1cxgDIAEoDjITLml0ZW0udjEuSXRlbVN0YXR1cxI2Cg1jcmVhdGVkX2FmdGVyGAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAiAEBEjcKDmNyZWF0ZWRfYmVmb3JlGAYgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgBiAEBQhAKDl9jcmVhdGVkX2FmdGVyQhEKD19jcmVhdGVkX2JlZm9yZUoECAcQFSIxChJDcmVhdGVJdGVtUmVzcG9uc2USGwoEaXRlbRgBIAEoCzINLml0ZW0udjEuSXRlbSIcCg5HZXRJdGVtUmVxdWVzdBIKCgJpZBgBIAEoCSIuCg9HZXRJdGVtUmVzcG9uc2USGwoEaXRlbRgBIAEoCzINLml0ZW0udjEuSXRlbSJfChBMaXN0SXRlbXNSZXF1ZXN0EhEKCXBhZ2Vfc2l6ZRgBIAEoBRISCgpwYWdlX3Rva2VuGAIgASgJEiQKB2ZpbHRlcnMYAyADKAsyEy5pdGVtLnYxLkl0ZW1GaWx0ZXIiXwoRTGlzdEl0ZW1zUmVzcG9uc2USHAoFaXRlbXMYASADKAsyDS5pdGVtLnYxLkl0ZW0SFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJEhMKC3RvdGFsX2NvdW50GAMgASgFIpoBChFVcGRhdGVJdGVtUmVxdWVzdBIKCgJpZBgBIAEoCRIRCgRuYW1lGAIgASgJSACIAQESGAoLZGVzY3JpcHRpb24YAyABKAlIAYgBARIoCgZzdGF0dXMYBCABKA4yEy5pdGVtLnYxLkl0ZW1TdGF0dXNIAogBAUIHCgVfbmFtZUIOCgxfZGVzY3JpcHRpb25CCQoHX3N0YXR1cyIxChJVcGRhdGVJdGVtUmVzcG9uc2USGwoEaXRlbRgBIAEoCzINLml0ZW0udjEuSXRlbSIfChFEZWxldGVJdGVtUmVxdWVzdBIKCgJpZBgBIAEoCSIUChJEZWxldGVJdGVtUmVzcG9uc2UiEwoRV2F0Y2hJdGVtc1JlcXVlc3QiRQoSV2F0Y2hJdGVtc1Jlc3BvbnNlEhsKBGl0ZW0YASABKAsyDS5pdGVtLnYxLkl0ZW0SEgoKZXZlbnRfdHlwZRgCIAEoCTK5AwoLSXRlbVNlcnZpY2USRwoKQ3JlYXRlSXRlbRIaLml0ZW0udjEuQ3JlYXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLkNyZWF0ZUl0ZW1SZXNwb25zZSIAEj4KB0dldEl0ZW0SFy5pdGVtLnYxLkdldEl0ZW1SZXF1ZXN0GhguaXRlbS52MS5HZXRJdGVtUmVzcG9uc2UiABJECglMaXN0SXRlbXMSGS5pdGVtLnYxLkxpc3RJdGVtc1JlcXVlc3QaGi5pdGVtLnYxLkxpc3RJdGVtc1Jlc3BvbnNlIgASRwoKVXBkYXRlSXRlbRIaLml0ZW0udjEuVXBkYXRlSXRlbVJlcXVlc3QaGy5pdGVtLnYxLlVwZGF0ZUl0ZW1SZXNwb25zZSIAEkcKCkRlbGV0ZUl0ZW0SGi5pdGVtLnYxLkRlbGV0ZUl0ZW1SZXF1ZXN0GhsuaXRlbS52MS5EZWxldGVJdGVtUmVzcG9uc2UiABJJCgpXYXRjaEl0ZW1zEhouaXRlbS52MS5XYXRjaEl0ZW1zUmVxdWVzdBobLml0ZW0udjEuV2F0Y2hJdGVtc1Jlc3BvbnNlIgAwAUKIAQoLY29tLml0ZW0udjFCEEl0ZW1TZXJ2aWNlUHJvdG9QAVoqZ3JwYy1zZXJ2ZXIvcHJvdG8tZ2VuZXJhdGVkL2l0ZW0vdjE7aXRlbXYxogIDSVhYqgIHSXRlbS5WMcoCB0l0ZW1cVjHiAhNJdGVtXFYxXEdQQk1ldGFkYXRh6gIISXRlbTo6VjFiBnByb3RvMw", [file_item_v1_item, file_google_protobuf_timestamp]);
 
 /**
- * ItemFilter provides flexible filtering options for items
- * New filters can be added without breaking existing clients
- *
  * @generated from message item.v1.ItemFilter
  */
 export type ItemFilter = Message<"item.v1.ItemFilter"> & {
   /**
-   * Filter by name (partial match, case-insensitive)
-   *
    * @generated from field: optional string name = 1;
    */
   name?: string;
 
   /**
-   * Filter by description (partial match, case-insensitive)
-   *
    * @generated from field: optional string description = 2;
    */
   description?: string;
 
   /**
-   * Filter by status (exact match, can specify multiple)
-   *
    * @generated from field: repeated item.v1.ItemStatus statuses = 3;
    */
   statuses: ItemStatus[];
 
   /**
-   * Filter by ID (exact match, can specify multiple)
-   *
    * @generated from field: repeated string ids = 4;
    */
   ids: string[];
@@ -75,6 +66,16 @@ export type CreateItemRequest = Message<"item.v1.CreateItemRequest"> & {
    * @generated from field: item.v1.ItemStatus status = 3;
    */
   status: ItemStatus;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp created_after = 5;
+   */
+  createdAfter?: Timestamp;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp created_before = 6;
+   */
+  createdBefore?: Timestamp;
 };
 
 /**
@@ -150,8 +151,6 @@ export type ListItemsRequest = Message<"item.v1.ListItemsRequest"> & {
   pageToken: string;
 
   /**
-   * Multiple filters are combined with AND logic
-   *
    * @generated from field: repeated item.v1.ItemFilter filters = 3;
    */
   filters: ItemFilter[];

@@ -6,13 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"grpc-server/ent/item"
+	"grpc-server/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heojeongbo/grpc/server/ent/item"
-	"github.com/heojeongbo/grpc/server/ent/predicate"
 )
 
 // ItemUpdate is the builder for updating Item entities.

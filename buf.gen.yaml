@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: github.com/heojeongbo/grpc/server/proto-generated
+      value: grpc-server/proto-generated
 plugins:
   # Go plugins
   - remote: buf.build/protocolbuffers/go

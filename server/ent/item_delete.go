@@ -4,12 +4,12 @@ package ent
 
 import (
 	"context"
+	"grpc-server/ent/item"
+	"grpc-server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heojeongbo/grpc/server/ent/item"
-	"github.com/heojeongbo/grpc/server/ent/predicate"
 )
 
 // ItemDelete is the builder for deleting a Item entity.

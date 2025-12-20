@@ -5,12 +5,13 @@ package enttest
 import (
 	"context"
 
-	"github.com/heojeongbo/grpc/server/ent"
+	"grpc-server/ent"
 	// required by schema hooks.
-	_ "github.com/heojeongbo/grpc/server/ent/runtime"
+	_ "grpc-server/ent/runtime"
+
+	"grpc-server/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/heojeongbo/grpc/server/ent/migrate"
 )
 
 type (

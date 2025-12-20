@@ -7,7 +7,7 @@ import (
 
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
-	"github.com/heojeongbo/grpc/server/ent"
+	"grpc-server/ent"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 

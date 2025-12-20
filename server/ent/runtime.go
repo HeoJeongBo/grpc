@@ -3,10 +3,9 @@
 package ent
 
 import (
+	"grpc-server/ent/item"
+	"grpc-server/ent/schema"
 	"time"
-
-	"github.com/heojeongbo/grpc/server/ent/item"
-	"github.com/heojeongbo/grpc/server/ent/schema"
 )
 
 // The init function reads all schema descriptors with runtime code

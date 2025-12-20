@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"time"
 
+	"grpc-server/database"
+	"grpc-server/ent"
+	"grpc-server/ent/item"
+
+	itemv1 "grpc-server/proto-generated/item/v1"
+
 	"connectrpc.com/connect"
-	"github.com/heojeongbo/grpc/server/database"
-	"github.com/heojeongbo/grpc/server/ent"
-	"github.com/heojeongbo/grpc/server/ent/item"
-	itemv1 "github.com/heojeongbo/grpc/server/proto-generated/item/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -17,7 +19,7 @@ type Server struct {
 	db *database.DB
 }
 
-func NewServer(db *database.DB) *Server {
+func NewItemServer(db *database.DB) *Server {
 	return &Server{
 		db: db,
 	}

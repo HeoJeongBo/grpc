@@ -6,13 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"grpc-server/ent/item"
+	"grpc-server/ent/predicate"
 	"sync"
 	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/heojeongbo/grpc/server/ent/item"
-	"github.com/heojeongbo/grpc/server/ent/predicate"
 )
 
 const (

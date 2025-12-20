@@ -3,10 +3,10 @@
 package item
 
 import (
+	"grpc-server/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/heojeongbo/grpc/server/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

@@ -4,9 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/heojeongbo/grpc/server/database"
-	"github.com/heojeongbo/grpc/server/item"
-	"github.com/heojeongbo/grpc/server/proto-generated/item/v1/itemv1connect"
+	"grpc-server/database"
+	"grpc-server/item"
+	"grpc-server/proto-generated/item/v1/itemv1connect"
+
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -21,7 +22,7 @@ func main() {
 	}
 	defer db.Close()
 
-	server := item.NewServer(db)
+	server := item.NewItemServer(db)
 	mux := http.NewServeMux()
 
 	path, handler := itemv1connect.NewItemServiceHandler(server)

@@ -9,12 +9,13 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/heojeongbo/grpc/server/ent/migrate"
+	"grpc-server/ent/migrate"
+
+	"grpc-server/ent/item"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
-	"github.com/heojeongbo/grpc/server/ent/item"
 )
 
 // Client is the client that holds all ent builders.

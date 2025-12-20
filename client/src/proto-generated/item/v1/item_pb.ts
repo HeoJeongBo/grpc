@@ -12,11 +12,9 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/v1/item.proto.
  */
 export const file_item_v1_item: GenFile = /*@__PURE__*/
-  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEiugEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIjCgZzdGF0dXMYBiABKA4yEy5pdGVtLnYxLkl0ZW1TdGF0dXMqiwEKCkl0ZW1TdGF0dXMSGwoXSVRFTV9TVEFUVVNfVU5TUEVDSUZJRUQQABIVChFJVEVNX1NUQVRVU19EUkFGVBABEhYKEklURU1fU1RBVFVTX0FDVElWRRACEhgKFElURU1fU1RBVFVTX0FSQ0hJVkVEEAMSFwoTSVRFTV9TVEFUVVNfREVMRVRFRBAEQpcBCgtjb20uaXRlbS52MUIJSXRlbVByb3RvUAFaQGdpdGh1Yi5jb20vaGVvamVvbmdiby9ncnBjL3NlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbS92MTtpdGVtdjGiAgNJWFiqAgdJdGVtLlYxygIHSXRlbVxWMeICE0l0ZW1cVjFcR1BCTWV0YWRhdGHqAghJdGVtOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChJpdGVtL3YxL2l0ZW0ucHJvdG8SB2l0ZW0udjEiugEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIjCgZzdGF0dXMYBiABKA4yEy5pdGVtLnYxLkl0ZW1TdGF0dXMqiwEKCkl0ZW1TdGF0dXMSGwoXSVRFTV9TVEFUVVNfVU5TUEVDSUZJRUQQABIVChFJVEVNX1NUQVRVU19EUkFGVBABEhYKEklURU1fU1RBVFVTX0FDVElWRRACEhgKFElURU1fU1RBVFVTX0FSQ0hJVkVEEAMSFwoTSVRFTV9TVEFUVVNfREVMRVRFRBAEQoEBCgtjb20uaXRlbS52MUIJSXRlbVByb3RvUAFaKmdycGMtc2VydmVyL3Byb3RvLWdlbmVyYXRlZC9pdGVtL3YxO2l0ZW12MaICA0lYWKoCB0l0ZW0uVjHKAgdJdGVtXFYx4gITSXRlbVxWMVxHUEJNZXRhZGF0YeoCCEl0ZW06OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
- * Item represents the core domain model for an item
- *
  * @generated from message item.v1.Item
  */
 export type Item = Message<"item.v1.Item"> & {
@@ -59,8 +57,6 @@ export const ItemSchema: GenMessage<Item> = /*@__PURE__*/
   messageDesc(file_item_v1_item, 0);
 
 /**
- * ItemStatus represents the current state of an item
- *
  * @generated from enum item.v1.ItemStatus
  */
 export enum ItemStatus {

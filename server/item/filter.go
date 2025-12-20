@@ -3,7 +3,7 @@ package item
 import (
 	"strings"
 
-	itemv1 "github.com/heojeongbo/grpc/server/proto-generated/item/v1"
+	itemv1 "grpc-server/proto-generated/item/v1"
 )
 
 type FilterFunc func(*itemv1.Item) bool

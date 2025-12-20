@@ -6,13 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"grpc-server/ent/item"
 	"reflect"
 	"sync"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heojeongbo/grpc/server/ent/item"
 )
 
 // ent aliases to avoid import conflicts in user's code.

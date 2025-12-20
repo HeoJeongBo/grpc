@@ -4,12 +4,12 @@ package ent
 
 import (
 	"fmt"
+	"grpc-server/ent/item"
 	"strings"
 	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/heojeongbo/grpc/server/ent/item"
 )
 
 // Item is the model entity for the Item schema.

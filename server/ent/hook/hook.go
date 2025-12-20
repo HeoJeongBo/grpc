@@ -5,8 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-
-	"github.com/heojeongbo/grpc/server/ent"
+	"grpc-server/ent"
 )
 
 // The ItemFunc type is an adapter to allow the use of ordinary

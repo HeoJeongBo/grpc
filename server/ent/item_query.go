@@ -5,14 +5,14 @@ package ent
 import (
 	"context"
 	"fmt"
+	"grpc-server/ent/item"
+	"grpc-server/ent/predicate"
 	"math"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heojeongbo/grpc/server/ent/item"
-	"github.com/heojeongbo/grpc/server/ent/predicate"
 )
 
 // ItemQuery is the builder for querying Item entities.
