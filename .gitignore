@@ -16,7 +16,6 @@ server/server
 **/.vite/
 
 # IDE
-.vscode/
 .idea/
 *.swp
 *.swo
