@@ -40,7 +40,7 @@ func main() {
 			"Connect-Protocol-Version",
 		},
 	}).Handler(mux)
-
+	
 	addr := ":8080"
 	log.Printf("Server listening on %s", addr)
 	if err := http.ListenAndServe(addr, h2c.NewHandler(corsHandler, &http2.Server{})); err != nil {
