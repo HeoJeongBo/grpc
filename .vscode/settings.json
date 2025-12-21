@@ -5,6 +5,21 @@
 		"**/dist/**": true
 	},
 	"gopls": {
-		"vulncheck": "Imports"
-	}
+		"vulncheck": "Imports",
+		"ui.diagnostic.analyses": {
+			"unusedparams": true,
+			"shadow": true
+		}
+	},
+	"[go]": {
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit"
+		},
+		"editor.defaultFormatter": "golang.go"
+	},
+	"go.formatTool": "goimports",
+	"go.lintOnSave": "workspace",
+	"go.lintTool": "golangci-lint",
+	"go.vetOnSave": "workspace"
 }
