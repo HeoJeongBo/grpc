@@ -1,0 +1,11 @@
+syntax = 'proto3';
+
+package auth;
+import "google/protobuf/timestamp.proto";
+
+// TokenPair represents a pair of tokens issued for authentication.
+message TokenPair {
+    string access_token = 1;
+    string refresh_token = 2;
+    google.protobuf.Timestamp expires_at = 3;
+}

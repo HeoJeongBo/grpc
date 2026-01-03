@@ -21,5 +21,12 @@
 	"go.formatTool": "goimports",
 	"go.lintOnSave": "workspace",
 	"go.lintTool": "golangci-lint",
-	"go.vetOnSave": "workspace"
+	"go.vetOnSave": "workspace",
+	"protobuf.externalLinter.enabled": true,
+	"protobuf.externalLinter.linter": "buf",
+	"protobuf.externalLinter.bufPath": "/opt/homebrew/bin/buf",
+	"protobuf.path": ["proto"],
+	"protobuf.protoc.options": [
+		"--proto_path=${workspaceRoot}/proto"
+	]
 }
