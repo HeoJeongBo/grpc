@@ -5,8 +5,9 @@ import (
 	"net/http"
 
 	"grpc-server/database"
-	"grpc-server/item"
-	"grpc-server/proto-generated/item/v1/itemv1connect"
+	"grpc-server/registry"
+
+	_ "grpc-server/item"
 
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
@@ -22,11 +23,10 @@ func main() {
 	}
 	defer db.Close()
 
-	server := item.NewItemServer(db)
 	mux := http.NewServeMux()
 
-	path, handler := itemv1connect.NewItemServiceHandler(server)
-	mux.Handle(path, handler)
+	// Register all domain handlers
+	registry.RegisterAll(db, mux)
 
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
@@ -40,7 +40,7 @@ func main() {
 			"Connect-Protocol-Version",
 		},
 	}).Handler(mux)
-	
+
 	addr := ":8080"
 	log.Printf("Server listening on %s", addr)
 	if err := http.ListenAndServe(addr, h2c.NewHandler(corsHandler, &http2.Server{})); err != nil {
