@@ -71,14 +71,30 @@ func (s *Server) Login(ctx context.Context, req *connect.Request[auth.LoginReque
 	}), nil
 }
 
-// Logout implements authconnect.AuthServiceHandler.
 func (s *Server) Logout(context.Context, *connect.Request[auth.LogoutRequest]) (*connect.Response[auth.LogoutResponse], error) {
-	panic("unimplemented")
+	return connect.NewResponse(&auth.LogoutResponse{}), nil
 }
 
-// RefreshToken implements authconnect.AuthServiceHandler.
-func (s *Server) RefreshToken(context.Context, *connect.Request[auth.RefreshTokenRequest]) (*connect.Response[auth.RefreshTokenResponse], error) {
-	panic("unimplemented")
+func (s *Server) RefreshToken(ctx context.Context, req *connect.Request[auth.RefreshTokenRequest]) (*connect.Response[auth.RefreshTokenResponse], error) {
+	claims, err := ValidateToken(req.Msg.RefreshToken)
+
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("failed to generated tokens : %w", err))
+	}
+
+	tokenPair, err := GenerateTokenPair(claims.UserID, claims.Email)
+
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generated tokens : %w", err))
+	}
+
+	return connect.NewResponse(&auth.RefreshTokenResponse{
+		Tokens: &auth.TokenPair{
+			AccessToken:  tokenPair.AccessToken,
+			RefreshToken: tokenPair.RefreshToken,
+			ExpiresAt:    timestamppb.New(tokenPair.AccessTokenExpiry),
+		},
+	}), nil
 }
 
 func (s *Server) Register(ctx context.Context, req *connect.Request[auth.RegisterRequest]) (*connect.Response[auth.RegisterResponse], error) {
