@@ -14,8 +14,9 @@ const (
 )
 
 type TokenPair struct {
-	AccessToken  string
-	RefreshToken string
+	AccessToken       string
+	RefreshToken      string
+	AccessTokenExpiry time.Time
 }
 
 type Claims struct {
@@ -25,6 +26,8 @@ type Claims struct {
 }
 
 func GenerateTokenPair(userID, email string) (*TokenPair, error) {
+	now := time.Now()
+
 	accessToken, err := generateToken(userID, email, accessTokenExpiry)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate access token: %w", err)
@@ -36,8 +39,9 @@ func GenerateTokenPair(userID, email string) (*TokenPair, error) {
 	}
 
 	return &TokenPair{
-		AccessToken:  accessToken,
-		RefreshToken: refreshToken,
+		AccessToken:       accessToken,
+		RefreshToken:      refreshToken,
+		AccessTokenExpiry: now.Add(accessTokenExpiry),
 	}, nil
 }
 

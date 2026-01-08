@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"time"
 
 	"grpc-server/database"
+	"grpc-server/ent"
+	"grpc-server/ent/user"
 	"grpc-server/proto-generated/auth"
 	"grpc-server/proto-generated/auth/authconnect"
 	"grpc-server/registry"
@@ -36,9 +37,38 @@ func NewAuthServer(db *database.DB) *Server {
 	}
 }
 
-// Login implements authconnect.AuthServiceHandler.
-func (s *Server) Login(context.Context, *connect.Request[auth.LoginRequest]) (*connect.Response[auth.LoginResponse], error) {
-	panic("unimplemented")
+func (s *Server) Login(ctx context.Context, req *connect.Request[auth.LoginRequest]) (*connect.Response[auth.LoginResponse], error) {
+	if err := ValidateEmail(req.Msg.Email); err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+	if err := ValidatePassword(req.Msg.Password); err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+	entUser, err := s.db.Client.User.Query().Where(user.EmailEQ((req.Msg.Email))).Only(ctx)
+
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("user not found"))
+		}
+		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("failed to query user : %w", err))
+	}
+
+	if verifyErr := VerifyPassword(entUser.PasswordHash, req.Msg.Password); verifyErr != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid password"))
+	}
+
+	tokenPair, err := GenerateTokenPair(entUser.ID, entUser.Email)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generated tokens : %w", err))
+	}
+	return connect.NewResponse(&auth.LoginResponse{
+		User: entUserToProto(entUser),
+		Tokens: &auth.TokenPair{
+			AccessToken:  tokenPair.AccessToken,
+			RefreshToken: tokenPair.RefreshToken,
+			ExpiresAt:    timestamppb.New(tokenPair.AccessTokenExpiry),
+		},
+	}), nil
 }
 
 // Logout implements authconnect.AuthServiceHandler.
@@ -93,7 +123,7 @@ func (s *Server) Register(ctx context.Context, req *connect.Request[auth.Registe
 		Tokens: &auth.TokenPair{
 			AccessToken:  tokenPair.AccessToken,
 			RefreshToken: tokenPair.RefreshToken,
-			ExpiresAt:    timestamppb.New(time.Now().Add(15 * time.Minute)),
+			ExpiresAt:    timestamppb.New(tokenPair.AccessTokenExpiry),
 		},
 	}), nil
 }
