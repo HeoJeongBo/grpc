@@ -1,6 +1,5 @@
 {
 	"files.exclude": {
-		"**/server/ent/**": true,
 		"**/node_modules/**": true,
 		"**/dist/**": true
 	},
@@ -26,7 +25,5 @@
 	"protobuf.externalLinter.linter": "buf",
 	"protobuf.externalLinter.bufPath": "/opt/homebrew/bin/buf",
 	"protobuf.path": ["proto"],
-	"protobuf.protoc.options": [
-		"--proto_path=${workspaceRoot}/proto"
-	]
+	"protobuf.protoc.options": ["--proto_path=${workspaceRoot}/proto"]
 }

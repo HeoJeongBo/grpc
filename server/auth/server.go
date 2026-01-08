@@ -2,13 +2,19 @@ package auth
 
 import (
 	"context"
+	"fmt"
+	"strings"
+	"time"
+
 	"grpc-server/database"
 	"grpc-server/proto-generated/auth"
 	"grpc-server/proto-generated/auth/authconnect"
 	"grpc-server/registry"
+
 	"net/http"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func init() {
@@ -45,7 +51,49 @@ func (s *Server) RefreshToken(context.Context, *connect.Request[auth.RefreshToke
 	panic("unimplemented")
 }
 
-// Register implements authconnect.AuthServiceHandler.
-func (s *Server) Register(context.Context, *connect.Request[auth.RegisterRequest]) (*connect.Response[auth.RegisterResponse], error) {
-	panic("unimplemented")
+func (s *Server) Register(ctx context.Context, req *connect.Request[auth.RegisterRequest]) (*connect.Response[auth.RegisterResponse], error) {
+	if err := ValidateEmail(req.Msg.Email); err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+
+	if err := ValidatePassword(req.Msg.Password); err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+
+	if req.Msg.Name == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("name is required"))
+	}
+
+	hashedPassword, err := HashPassword(req.Msg.Password)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to hash password: %w", err))
+	}
+
+	entUser, err := s.db.Client.User.
+		Create().
+		SetEmail(req.Msg.Email).
+		SetName(req.Msg.Name).
+		SetPasswordHash(hashedPassword).
+		Save(ctx)
+
+	if err != nil {
+		if strings.Contains(err.Error(), "unique constraint") || strings.Contains(err.Error(), "UNIQUE constraint") {
+			return nil, connect.NewError(connect.CodeAlreadyExists, fmt.Errorf("user with this email already exists"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to create user: %w", err))
+	}
+
+	tokenPair, err := GenerateTokenPair(entUser.ID, entUser.Email)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generate tokens: %w", err))
+	}
+
+	return connect.NewResponse(&auth.RegisterResponse{
+		User: entUserToProto(entUser),
+		Tokens: &auth.TokenPair{
+			AccessToken:  tokenPair.AccessToken,
+			RefreshToken: tokenPair.RefreshToken,
+			ExpiresAt:    timestamppb.New(time.Now().Add(15 * time.Minute)),
+		},
+	}), nil
 }
