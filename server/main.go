@@ -7,7 +7,9 @@ import (
 	"grpc-server/database"
 	"grpc-server/registry"
 
+	_ "grpc-server/auth"
 	_ "grpc-server/item"
+	_ "grpc-server/user"
 
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"

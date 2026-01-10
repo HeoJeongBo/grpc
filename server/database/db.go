@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 
+	"grpc-server/ent"
+
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
-	"grpc-server/ent"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 

@@ -89,11 +89,7 @@ func (s *Server) RefreshToken(ctx context.Context, req *connect.Request[auth.Ref
 	}
 
 	return connect.NewResponse(&auth.RefreshTokenResponse{
-		Tokens: &auth.TokenPair{
-			AccessToken:  tokenPair.AccessToken,
-			RefreshToken: tokenPair.RefreshToken,
-			ExpiresAt:    timestamppb.New(tokenPair.AccessTokenExpiry),
-		},
+		Tokens: tokenPairToProto(tokenPair),
 	}), nil
 }
 
@@ -135,11 +131,7 @@ func (s *Server) Register(ctx context.Context, req *connect.Request[auth.Registe
 	}
 
 	return connect.NewResponse(&auth.RegisterResponse{
-		User: entUserToProto(entUser),
-		Tokens: &auth.TokenPair{
-			AccessToken:  tokenPair.AccessToken,
-			RefreshToken: tokenPair.RefreshToken,
-			ExpiresAt:    timestamppb.New(tokenPair.AccessTokenExpiry),
-		},
+		User:   entUserToProto(entUser),
+		Tokens: tokenPairToProto(tokenPair),
 	}), nil
 }
