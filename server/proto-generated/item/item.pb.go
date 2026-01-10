@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        (unknown)
-// source: item/v1/item.proto
+// source: item/item.proto
 
-package itemv1
+package item
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -61,11 +61,11 @@ func (x ItemStatus) String() string {
 }
 
 func (ItemStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_item_v1_item_proto_enumTypes[0].Descriptor()
+	return file_item_item_proto_enumTypes[0].Descriptor()
 }
 
 func (ItemStatus) Type() protoreflect.EnumType {
-	return &file_item_v1_item_proto_enumTypes[0]
+	return &file_item_item_proto_enumTypes[0]
 }
 
 func (x ItemStatus) Number() protoreflect.EnumNumber {
@@ -74,7 +74,7 @@ func (x ItemStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ItemStatus.Descriptor instead.
 func (ItemStatus) EnumDescriptor() ([]byte, []int) {
-	return file_item_v1_item_proto_rawDescGZIP(), []int{0}
+	return file_item_item_proto_rawDescGZIP(), []int{0}
 }
 
 type Item struct {
@@ -84,14 +84,14 @@ type Item struct {
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Status        ItemStatus             `protobuf:"varint,6,opt,name=status,proto3,enum=item.v1.ItemStatus" json:"status,omitempty"`
+	Status        ItemStatus             `protobuf:"varint,6,opt,name=status,proto3,enum=item.ItemStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Item) Reset() {
 	*x = Item{}
-	mi := &file_item_v1_item_proto_msgTypes[0]
+	mi := &file_item_item_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -103,7 +103,7 @@ func (x *Item) String() string {
 func (*Item) ProtoMessage() {}
 
 func (x *Item) ProtoReflect() protoreflect.Message {
-	mi := &file_item_v1_item_proto_msgTypes[0]
+	mi := &file_item_item_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -116,7 +116,7 @@ func (x *Item) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Item.ProtoReflect.Descriptor instead.
 func (*Item) Descriptor() ([]byte, []int) {
-	return file_item_v1_item_proto_rawDescGZIP(), []int{0}
+	return file_item_item_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Item) GetId() string {
@@ -161,11 +161,11 @@ func (x *Item) GetStatus() ItemStatus {
 	return ItemStatus_ITEM_STATUS_UNSPECIFIED
 }
 
-var File_item_v1_item_proto protoreflect.FileDescriptor
+var File_item_item_proto protoreflect.FileDescriptor
 
-const file_item_v1_item_proto_rawDesc = "" +
+const file_item_item_proto_rawDesc = "" +
 	"\n" +
-	"\x12item/v1/item.proto\x12\aitem.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xef\x01\n" +
+	"\x0fitem/item.proto\x12\x04item\x1a\x1fgoogle/protobuf/timestamp.proto\"\xec\x01\n" +
 	"\x04Item\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -173,40 +173,40 @@ const file_item_v1_item_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12+\n" +
-	"\x06status\x18\x06 \x01(\x0e2\x13.item.v1.ItemStatusR\x06status*\x8b\x01\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12(\n" +
+	"\x06status\x18\x06 \x01(\x0e2\x10.item.ItemStatusR\x06status*\x8b\x01\n" +
 	"\n" +
 	"ItemStatus\x12\x1b\n" +
 	"\x17ITEM_STATUS_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11ITEM_STATUS_DRAFT\x10\x01\x12\x16\n" +
 	"\x12ITEM_STATUS_ACTIVE\x10\x02\x12\x18\n" +
 	"\x14ITEM_STATUS_ARCHIVED\x10\x03\x12\x17\n" +
-	"\x13ITEM_STATUS_DELETED\x10\x04B\x81\x01\n" +
-	"\vcom.item.v1B\tItemProtoP\x01Z*grpc-server/proto-generated/item/v1;itemv1\xa2\x02\x03IXX\xaa\x02\aItem.V1\xca\x02\aItem\\V1\xe2\x02\x13Item\\V1\\GPBMetadata\xea\x02\bItem::V1b\x06proto3"
+	"\x13ITEM_STATUS_DELETED\x10\x04Bg\n" +
+	"\bcom.itemB\tItemProtoP\x01Z grpc-server/proto-generated/item\xa2\x02\x03IXX\xaa\x02\x04Item\xca\x02\x04Item\xe2\x02\x10Item\\GPBMetadata\xea\x02\x04Itemb\x06proto3"
 
 var (
-	file_item_v1_item_proto_rawDescOnce sync.Once
-	file_item_v1_item_proto_rawDescData []byte
+	file_item_item_proto_rawDescOnce sync.Once
+	file_item_item_proto_rawDescData []byte
 )
 
-func file_item_v1_item_proto_rawDescGZIP() []byte {
-	file_item_v1_item_proto_rawDescOnce.Do(func() {
-		file_item_v1_item_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_item_v1_item_proto_rawDesc), len(file_item_v1_item_proto_rawDesc)))
+func file_item_item_proto_rawDescGZIP() []byte {
+	file_item_item_proto_rawDescOnce.Do(func() {
+		file_item_item_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_item_item_proto_rawDesc), len(file_item_item_proto_rawDesc)))
 	})
-	return file_item_v1_item_proto_rawDescData
+	return file_item_item_proto_rawDescData
 }
 
-var file_item_v1_item_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_item_v1_item_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_item_v1_item_proto_goTypes = []any{
-	(ItemStatus)(0),               // 0: item.v1.ItemStatus
-	(*Item)(nil),                  // 1: item.v1.Item
+var file_item_item_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_item_item_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_item_item_proto_goTypes = []any{
+	(ItemStatus)(0),               // 0: item.ItemStatus
+	(*Item)(nil),                  // 1: item.Item
 	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
 }
-var file_item_v1_item_proto_depIdxs = []int32{
-	2, // 0: item.v1.Item.created_at:type_name -> google.protobuf.Timestamp
-	2, // 1: item.v1.Item.updated_at:type_name -> google.protobuf.Timestamp
-	0, // 2: item.v1.Item.status:type_name -> item.v1.ItemStatus
+var file_item_item_proto_depIdxs = []int32{
+	2, // 0: item.Item.created_at:type_name -> google.protobuf.Timestamp
+	2, // 1: item.Item.updated_at:type_name -> google.protobuf.Timestamp
+	0, // 2: item.Item.status:type_name -> item.ItemStatus
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -214,27 +214,27 @@ var file_item_v1_item_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_item_v1_item_proto_init() }
-func file_item_v1_item_proto_init() {
-	if File_item_v1_item_proto != nil {
+func init() { file_item_item_proto_init() }
+func file_item_item_proto_init() {
+	if File_item_item_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_item_v1_item_proto_rawDesc), len(file_item_v1_item_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_item_item_proto_rawDesc), len(file_item_item_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_item_v1_item_proto_goTypes,
-		DependencyIndexes: file_item_v1_item_proto_depIdxs,
-		EnumInfos:         file_item_v1_item_proto_enumTypes,
-		MessageInfos:      file_item_v1_item_proto_msgTypes,
+		GoTypes:           file_item_item_proto_goTypes,
+		DependencyIndexes: file_item_item_proto_depIdxs,
+		EnumInfos:         file_item_item_proto_enumTypes,
+		MessageInfos:      file_item_item_proto_msgTypes,
 	}.Build()
-	File_item_v1_item_proto = out.File
-	file_item_v1_item_proto_goTypes = nil
-	file_item_v1_item_proto_depIdxs = nil
+	File_item_item_proto = out.File
+	file_item_item_proto_goTypes = nil
+	file_item_item_proto_depIdxs = nil
 }

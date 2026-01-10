@@ -3,7 +3,7 @@ package item
 import (
 	"strings"
 
-	itemv1 "grpc-server/proto-generated/item/v1"
+	itemv1 "grpc-server/proto-generated/item"
 )
 
 type FilterFunc func(*itemv1.Item) bool
@@ -67,7 +67,6 @@ func StatusFilter(statuses []itemv1.ItemStatus) FilterFunc {
 		return nil
 	}
 
-	
 	statusMap := make(map[itemv1.ItemStatus]bool, len(statuses))
 	for _, status := range statuses {
 		statusMap[status] = true
@@ -100,25 +99,20 @@ func ApplyItemFilter(protoFilter *itemv1.ItemFilter) FilterFunc {
 
 	builder := NewFilterBuilder()
 
-	
 	if protoFilter.Name != nil {
 		builder.AddFilter(NameFilter(*protoFilter.Name))
 	}
 
-	
 	if protoFilter.Description != nil {
 		builder.AddFilter(DescriptionFilter(*protoFilter.Description))
 	}
 
-	
 	builder.AddFilter(StatusFilter(protoFilter.Statuses))
 
-	
 	builder.AddFilter(IDsFilter(protoFilter.Ids))
 
 	return builder.Build()
 }
-
 
 func ApplyItemFilters(protoFilters []*itemv1.ItemFilter) FilterFunc {
 	if len(protoFilters) == 0 {
@@ -127,14 +121,12 @@ func ApplyItemFilters(protoFilters []*itemv1.ItemFilter) FilterFunc {
 
 	builder := NewFilterBuilder()
 
-	
 	for _, protoFilter := range protoFilters {
 		builder.AddFilter(ApplyItemFilter(protoFilter))
 	}
 
 	return builder.Build()
 }
-
 
 func FilterItems(items []*itemv1.Item, filter FilterFunc) []*itemv1.Item {
 	if filter == nil {

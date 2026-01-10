@@ -9,9 +9,8 @@ import (
 	"grpc-server/database"
 	"grpc-server/ent"
 	"grpc-server/ent/item"
-
-	itemv1 "grpc-server/proto-generated/item/v1"
-	"grpc-server/proto-generated/item/v1/itemv1connect"
+	itemv1 "grpc-server/proto-generated/item"
+	"grpc-server/proto-generated/item/itemconnect"
 
 	"connectrpc.com/connect"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -19,7 +18,7 @@ import (
 
 func Register(db *database.DB, mux *http.ServeMux) {
 	server := NewItemServer(db)
-	path, handler := itemv1connect.NewItemServiceHandler(server)
+	path, handler := itemconnect.NewItemServiceHandler(server)
 	mux.Handle(path, handler)
 }
 

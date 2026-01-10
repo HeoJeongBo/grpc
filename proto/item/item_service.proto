@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package item.v1;
+package item;
 
-import "item/v1/item.proto";
 import "google/protobuf/timestamp.proto";
+import "item/item.proto";
 
 service ItemService {
   rpc CreateItem(CreateItemRequest) returns (CreateItemResponse) {}

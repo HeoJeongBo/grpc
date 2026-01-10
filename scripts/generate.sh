@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+echo "🧹 Cleaning previous generated files..."
+
+# Remove previous generated proto files
+rm -rf server/proto-generated/*
+rm -rf client/src/proto-generated/*
+
 echo "🔨 Generating code from proto files..."
 
 # Generate Go and TypeScript code
@@ -12,8 +18,3 @@ echo "🔨 Generating Ent code..."
 cd server && GOWORK=off go generate ./ent && cd ..
 
 echo "✅ Code generation completed!"
-echo ""
-echo "Generated files:"
-echo "  - Go: server/proto-generated/item/v1/*.go"
-echo "  - TypeScript: client/src/proto-generated/item/v1/*.ts"
-echo "  - Ent: server/ent/*.go"

@@ -3,13 +3,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button, Card, Dialog, Input, Textarea } from "@/components/ui";
-import type { Item } from "@/proto-generated/item/v1/item_pb";
+import type { Item } from "@/proto-generated/item/item_pb";
 import {
 	createItem,
 	deleteItem,
 	listItems,
 	updateItem,
-} from "@/proto-generated/item/v1/item_service-ItemService_connectquery";
+} from "@/proto-generated/item/item_service-ItemService_connectquery";
 
 export const Route = createFileRoute("/(auth)/items/")({
 	component: Items,
