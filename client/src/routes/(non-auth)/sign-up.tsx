@@ -48,7 +48,7 @@ function RouteComponent() {
 	const registerMutation = useMutation(register, {
 		onSuccess: (data) => {
 			if (data.user && data.tokens) {
-				login(data.user, data.tokens.accessToken, data.tokens.refreshToken);
+				login(data.tokens.accessToken, data.tokens.refreshToken);
 				toast.success("회원가입 성공!");
 				navigate({ to: "/" });
 			}

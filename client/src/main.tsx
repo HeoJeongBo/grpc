@@ -5,6 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
+import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "./context/auth-context";
 import { transport } from "./lib/connect-client";
 
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 			<TransportProvider transport={transport}>
 				<QueryClientProvider client={queryClient}>
 					<App />
+					<Toaster />
 				</QueryClientProvider>
 			</TransportProvider>
 		</AuthProvider>

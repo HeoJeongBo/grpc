@@ -1,17 +1,14 @@
 import type React from "react";
 import { createContext, useCallback, useContext, useMemo } from "react";
-import type { User } from "@/proto-generated/user/user_pb";
 import { useAuthStore } from "../store/auth-store";
 
 export interface AuthContext {
-	user: User | null;
 	accessToken: string | null;
 	refreshToken: string | null;
 	isAuthenticated: boolean;
-	login: (user: User, accessToken: string, refreshToken: string) => void;
+	login: (accessToken: string, refreshToken: string) => void;
 	logout: () => void;
 	updateAccessToken: (accessToken: string) => void;
-	updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -22,26 +19,24 @@ export interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
 	const {
-		user,
 		accessToken,
 		refreshToken,
 		isAuthenticated,
-		setAuth,
-		clearAuth,
+		setTokens,
+		clearTokens,
 		updateAccessToken: storeUpdateAccessToken,
-		setUser,
 	} = useAuthStore();
 
 	const login = useCallback(
-		(user: User, accessToken: string, refreshToken: string) => {
-			setAuth(user, accessToken, refreshToken);
+		(accessToken: string, refreshToken: string) => {
+			setTokens(accessToken, refreshToken);
 		},
-		[setAuth],
+		[setTokens],
 	);
 
 	const logout = useCallback(() => {
-		clearAuth();
-	}, [clearAuth]);
+		clearTokens();
+	}, [clearTokens]);
 
 	const updateAccessToken = useCallback(
 		(accessToken: string) => {
@@ -50,33 +45,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		[storeUpdateAccessToken],
 	);
 
-	const updateUser = useCallback(
-		(user: User) => {
-			setUser(user);
-		},
-		[setUser],
-	);
-
 	const value = useMemo(
 		() => ({
-			user,
 			accessToken,
 			refreshToken,
 			isAuthenticated,
 			login,
 			logout,
 			updateAccessToken,
-			updateUser,
 		}),
 		[
-			user,
 			accessToken,
 			refreshToken,
 			isAuthenticated,
 			login,
 			logout,
 			updateAccessToken,
-			updateUser,
 		],
 	);
 
