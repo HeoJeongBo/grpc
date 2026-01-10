@@ -1,6 +1,15 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+	createRootRouteWithContext,
+	Link,
+	Outlet,
+} from "@tanstack/react-router";
+import type { AuthContext } from "@/context/auth-context";
 
-export const Route = createRootRoute({
+interface RouterContext {
+	auth: AuthContext;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
 	component: () => (
 		<div className="min-h-screen bg-gray-50">
 			<nav className="bg-white shadow-sm">

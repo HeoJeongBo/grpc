@@ -5,9 +5,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
+import { useAuth } from "./context/auth-context";
 import { transport } from "./lib/connect-client";
 
-const router = createRouter({ routeTree });
+// biome-ignore lint/style/noNonNullAssertion: initialize auth with undefined
+const router = createRouter({ routeTree, context: { auth: undefined! } });
 
 const queryClient = new QueryClient();
 declare module "@tanstack/react-router" {
@@ -16,11 +18,18 @@ declare module "@tanstack/react-router" {
 	}
 }
 
+function App() {
+	const auth = useAuth();
+
+	return <RouterProvider router={router} context={{ auth }} />;
+}
+
+// biome-ignore lint/style/noNonNullAssertion: root is always exist
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<TransportProvider transport={transport}>
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
+				<App />
 			</QueryClientProvider>
 		</TransportProvider>
 	</React.StrictMode>,
