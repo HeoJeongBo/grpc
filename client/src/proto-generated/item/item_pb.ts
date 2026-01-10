@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file item/item.proto.
  */
 export const file_item_item: GenFile = /*@__PURE__*/
-  fileDesc("Cg9pdGVtL2l0ZW0ucHJvdG8SBGl0ZW0itwEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIgCgZzdGF0dXMYBiABKA4yEC5pdGVtLkl0ZW1TdGF0dXMqiwEKCkl0ZW1TdGF0dXMSGwoXSVRFTV9TVEFUVVNfVU5TUEVDSUZJRUQQABIVChFJVEVNX1NUQVRVU19EUkFGVBABEhYKEklURU1fU1RBVFVTX0FDVElWRRACEhgKFElURU1fU1RBVFVTX0FSQ0hJVkVEEAMSFwoTSVRFTV9TVEFUVVNfREVMRVRFRBAEQmcKCGNvbS5pdGVtQglJdGVtUHJvdG9QAVogZ3JwYy1zZXJ2ZXIvcHJvdG8tZ2VuZXJhdGVkL2l0ZW2iAgNJWFiqAgRJdGVtygIESXRlbeICEEl0ZW1cR1BCTWV0YWRhdGHqAgRJdGVtYgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("Cg9pdGVtL2l0ZW0ucHJvdG8SBGl0ZW0iyAEKBEl0ZW0SCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlvbhgDIAEoCRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIgCgZzdGF0dXMYBiABKA4yEC5pdGVtLkl0ZW1TdGF0dXMSDwoHdXNlcl9pZBgHIAEoCSqLAQoKSXRlbVN0YXR1cxIbChdJVEVNX1NUQVRVU19VTlNQRUNJRklFRBAAEhUKEUlURU1fU1RBVFVTX0RSQUZUEAESFgoSSVRFTV9TVEFUVVNfQUNUSVZFEAISGAoUSVRFTV9TVEFUVVNfQVJDSElWRUQQAxIXChNJVEVNX1NUQVRVU19ERUxFVEVEEARCZwoIY29tLml0ZW1CCUl0ZW1Qcm90b1ABWiBncnBjLXNlcnZlci9wcm90by1nZW5lcmF0ZWQvaXRlbaICA0lYWKoCBEl0ZW3KAgRJdGVt4gIQSXRlbVxHUEJNZXRhZGF0YeoCBEl0ZW1iBnByb3RvMw", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message item.Item
@@ -47,6 +47,11 @@ export type Item = Message<"item.Item"> & {
    * @generated from field: item.ItemStatus status = 6;
    */
   status: ItemStatus;
+
+  /**
+   * @generated from field: string user_id = 7;
+   */
+  userId: string;
 };
 
 /**

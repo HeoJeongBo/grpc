@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"grpc-server/ent/item"
+	"grpc-server/ent/user"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -96,6 +97,17 @@ func (_c *ItemCreate) SetNillableID(v *string) *ItemCreate {
 	return _c
 }
 
+// SetUserID sets the "user" edge to the User entity by ID.
+func (_c *ItemCreate) SetUserID(id string) *ItemCreate {
+	_c.mutation.SetUserID(id)
+	return _c
+}
+
+// SetUser sets the "user" edge to the User entity.
+func (_c *ItemCreate) SetUser(v *User) *ItemCreate {
+	return _c.SetUserID(v.ID)
+}
+
 // Mutation returns the ItemMutation object of the builder.
 func (_c *ItemCreate) Mutation() *ItemMutation {
 	return _c.mutation
@@ -175,6 +187,9 @@ func (_c *ItemCreate) check() error {
 	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Item.updated_at"`)}
 	}
+	if len(_c.mutation.UserIDs()) == 0 {
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "Item.user"`)}
+	}
 	return nil
 }
 
@@ -229,6 +244,23 @@ func (_c *ItemCreate) createSpec() (*Item, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(item.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
+	}
+	if nodes := _c.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   item.UserTable,
+			Columns: []string{item.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.user_items = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

@@ -85,6 +85,7 @@ type Item struct {
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	Status        ItemStatus             `protobuf:"varint,6,opt,name=status,proto3,enum=item.ItemStatus" json:"status,omitempty"`
+	UserId        string                 `protobuf:"bytes,7,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -161,11 +162,18 @@ func (x *Item) GetStatus() ItemStatus {
 	return ItemStatus_ITEM_STATUS_UNSPECIFIED
 }
 
+func (x *Item) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 var File_item_item_proto protoreflect.FileDescriptor
 
 const file_item_item_proto_rawDesc = "" +
 	"\n" +
-	"\x0fitem/item.proto\x12\x04item\x1a\x1fgoogle/protobuf/timestamp.proto\"\xec\x01\n" +
+	"\x0fitem/item.proto\x12\x04item\x1a\x1fgoogle/protobuf/timestamp.proto\"\x85\x02\n" +
 	"\x04Item\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -174,7 +182,8 @@ const file_item_item_proto_rawDesc = "" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12(\n" +
-	"\x06status\x18\x06 \x01(\x0e2\x10.item.ItemStatusR\x06status*\x8b\x01\n" +
+	"\x06status\x18\x06 \x01(\x0e2\x10.item.ItemStatusR\x06status\x12\x17\n" +
+	"\auser_id\x18\a \x01(\tR\x06userId*\x8b\x01\n" +
 	"\n" +
 	"ItemStatus\x12\x1b\n" +
 	"\x17ITEM_STATUS_UNSPECIFIED\x10\x00\x12\x15\n" +

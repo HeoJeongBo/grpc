@@ -19,4 +19,5 @@ message Item {
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
   ItemStatus status = 6;
+  string user_id = 7;
 }

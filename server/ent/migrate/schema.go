@@ -16,12 +16,21 @@ var (
 		{Name: "status", Type: field.TypeInt32, Default: 0},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "user_items", Type: field.TypeString},
 	}
 	// ItemsTable holds the schema information for the "items" table.
 	ItemsTable = &schema.Table{
 		Name:       "items",
 		Columns:    ItemsColumns,
 		PrimaryKey: []*schema.Column{ItemsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "items_users_items",
+				Columns:    []*schema.Column{ItemsColumns[6]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+		},
 	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
@@ -53,4 +62,5 @@ var (
 )
 
 func init() {
+	ItemsTable.ForeignKeys[0].RefTable = UsersTable
 }

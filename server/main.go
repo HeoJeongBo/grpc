@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"grpc-server/auth"
 	"grpc-server/database"
 	"grpc-server/registry"
 
@@ -26,6 +27,9 @@ func main() {
 	// Register all domain handlers
 	registry.RegisterAll(db, mux)
 
+	// Apply authentication middleware
+	authHandler := auth.Middleware(mux)
+
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -33,11 +37,12 @@ func main() {
 			"*",
 			"Connect-Protocol-Version",
 			"Content-Type",
+			"Authorization",
 		},
 		ExposedHeaders: []string{
 			"Connect-Protocol-Version",
 		},
-	}).Handler(mux)
+	}).Handler(authHandler)
 
 	addr := ":8080"
 	log.Printf("Server listening on %s", addr)

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"grpc-server/auth"
 	"grpc-server/database"
 	"grpc-server/ent"
 	"grpc-server/ent/item"
@@ -36,6 +37,12 @@ func (s *Server) CreateItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.CreateItemRequest],
 ) (*connect.Response[itemv1.CreateItemResponse], error) {
+	// Get authenticated user from context
+	userID, err := auth.RequireAuth(ctx)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authentication required"))
+	}
+
 	status := req.Msg.Status
 	if status == itemv1.ItemStatus_ITEM_STATUS_UNSPECIFIED {
 		status = itemv1.ItemStatus_ITEM_STATUS_DRAFT
@@ -46,6 +53,7 @@ func (s *Server) CreateItem(
 		SetName(req.Msg.Name).
 		SetDescription(req.Msg.Description).
 		SetStatus(int32(status)).
+		SetUserID(userID).
 		Save(ctx)
 
 	if err != nil {
@@ -64,6 +72,7 @@ func (s *Server) GetItem(
 	entItem, err := s.db.Client.Item.
 		Query().
 		Where(item.IDEQ(req.Msg.Id)).
+		WithUser().
 		Only(ctx)
 
 	if err != nil {
@@ -84,6 +93,7 @@ func (s *Server) ListItems(
 ) (*connect.Response[itemv1.ListItemsResponse], error) {
 	entItems, err := s.db.Client.Item.
 		Query().
+		WithUser().
 		Order(ent.Desc(item.FieldCreatedAt)).
 		All(ctx)
 
@@ -109,6 +119,31 @@ func (s *Server) UpdateItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.UpdateItemRequest],
 ) (*connect.Response[itemv1.UpdateItemResponse], error) {
+	// Get authenticated user from context
+	userID, err := auth.RequireAuth(ctx)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authentication required"))
+	}
+
+	// Verify the item belongs to the user
+	existingItem, err := s.db.Client.Item.
+		Query().
+		Where(item.IDEQ(req.Msg.Id)).
+		WithUser().
+		Only(ctx)
+
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to get item: %w", err))
+	}
+
+	// Check if the item belongs to the authenticated user
+	if existingItem.Edges.User == nil || existingItem.Edges.User.ID != userID {
+		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("you don't have permission to update this item"))
+	}
+
 	update := s.db.Client.Item.
 		UpdateOneID(req.Msg.Id)
 
@@ -141,7 +176,32 @@ func (s *Server) DeleteItem(
 	ctx context.Context,
 	req *connect.Request[itemv1.DeleteItemRequest],
 ) (*connect.Response[itemv1.DeleteItemResponse], error) {
-	err := s.db.Client.Item.
+	// Get authenticated user from context
+	userID, err := auth.RequireAuth(ctx)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authentication required"))
+	}
+
+	// Verify the item belongs to the user
+	existingItem, err := s.db.Client.Item.
+		Query().
+		Where(item.IDEQ(req.Msg.Id)).
+		WithUser().
+		Only(ctx)
+
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("item not found"))
+		}
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to get item: %w", err))
+	}
+
+	// Check if the item belongs to the authenticated user
+	if existingItem.Edges.User == nil || existingItem.Edges.User.ID != userID {
+		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("you don't have permission to delete this item"))
+	}
+
+	err = s.db.Client.Item.
 		DeleteOneID(req.Msg.Id).
 		Exec(ctx)
 
@@ -170,6 +230,7 @@ func (s *Server) WatchItems(
 		case <-ticker.C:
 			entItems, err := s.db.Client.Item.
 				Query().
+				WithUser().
 				Order(ent.Desc(item.FieldCreatedAt)).
 				All(ctx)
 
@@ -190,11 +251,17 @@ func (s *Server) WatchItems(
 }
 
 func entItemToProto(entItem *ent.Item) *itemv1.Item {
+	userID := ""
+	if entItem.Edges.User != nil {
+		userID = entItem.Edges.User.ID
+	}
+
 	return &itemv1.Item{
 		Id:          entItem.ID,
 		Name:        entItem.Name,
 		Description: entItem.Description,
 		Status:      itemv1.ItemStatus(entItem.Status),
+		UserId:      userID,
 		CreatedAt:   timestamppb.New(entItem.CreatedAt),
 		UpdatedAt:   timestamppb.New(entItem.UpdatedAt),
 	}
