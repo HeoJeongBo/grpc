@@ -11,9 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as nonAuthSignUpRouteImport } from './routes/(non-auth)/sign-up'
 import { Route as nonAuthSignInRouteImport } from './routes/(non-auth)/sign-in'
-import { Route as authItemsIndexRouteImport } from './routes/(auth)/items/index'
+import { Route as authItemsItemsRouteImport } from './routes/(auth)/items/items'
 
 const authRouteRoute = authRouteRouteImport.update({
   id: '/(auth)',
@@ -24,61 +23,51 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const nonAuthSignUpRoute = nonAuthSignUpRouteImport.update({
-  id: '/(non-auth)/sign-up',
-  path: '/sign-up',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const nonAuthSignInRoute = nonAuthSignInRouteImport.update({
   id: '/(non-auth)/sign-in',
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
-const authItemsIndexRoute = authItemsIndexRouteImport.update({
-  id: '/items/',
-  path: '/items/',
+const authItemsItemsRoute = authItemsItemsRouteImport.update({
+  id: '/items/items',
+  path: '/items/items',
   getParentRoute: () => authRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sign-in': typeof nonAuthSignInRoute
-  '/sign-up': typeof nonAuthSignUpRoute
-  '/items': typeof authItemsIndexRoute
+  '/items/items': typeof authItemsItemsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sign-in': typeof nonAuthSignInRoute
-  '/sign-up': typeof nonAuthSignUpRoute
-  '/items': typeof authItemsIndexRoute
+  '/items/items': typeof authItemsItemsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/(non-auth)/sign-in': typeof nonAuthSignInRoute
-  '/(non-auth)/sign-up': typeof nonAuthSignUpRoute
-  '/(auth)/items/': typeof authItemsIndexRoute
+  '/(auth)/items/items': typeof authItemsItemsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up' | '/items'
+  fullPaths: '/' | '/sign-in' | '/items/items'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up' | '/items'
+  to: '/' | '/sign-in' | '/items/items'
   id:
     | '__root__'
     | '/'
     | '/(auth)'
     | '/(non-auth)/sign-in'
-    | '/(non-auth)/sign-up'
-    | '/(auth)/items/'
+    | '/(auth)/items/items'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   nonAuthSignInRoute: typeof nonAuthSignInRoute
-  nonAuthSignUpRoute: typeof nonAuthSignUpRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -97,13 +86,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(non-auth)/sign-up': {
-      id: '/(non-auth)/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof nonAuthSignUpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(non-auth)/sign-in': {
       id: '/(non-auth)/sign-in'
       path: '/sign-in'
@@ -111,22 +93,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof nonAuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(auth)/items/': {
-      id: '/(auth)/items/'
-      path: '/items'
-      fullPath: '/items'
-      preLoaderRoute: typeof authItemsIndexRouteImport
+    '/(auth)/items/items': {
+      id: '/(auth)/items/items'
+      path: '/items/items'
+      fullPath: '/items/items'
+      preLoaderRoute: typeof authItemsItemsRouteImport
       parentRoute: typeof authRouteRoute
     }
   }
 }
 
 interface authRouteRouteChildren {
-  authItemsIndexRoute: typeof authItemsIndexRoute
+  authItemsItemsRoute: typeof authItemsItemsRoute
 }
 
 const authRouteRouteChildren: authRouteRouteChildren = {
-  authItemsIndexRoute: authItemsIndexRoute,
+  authItemsItemsRoute: authItemsItemsRoute,
 }
 
 const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
@@ -137,7 +119,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   nonAuthSignInRoute: nonAuthSignInRoute,
-  nonAuthSignUpRoute: nonAuthSignUpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

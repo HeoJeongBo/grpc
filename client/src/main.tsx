@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
-import { useAuth } from "./context/auth-context";
+import { AuthProvider, useAuth } from "./context/auth-context";
 import { transport } from "./lib/connect-client";
 
 // biome-ignore lint/style/noNonNullAssertion: initialize auth with undefined
@@ -27,10 +27,12 @@ function App() {
 // biome-ignore lint/style/noNonNullAssertion: root is always exist
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<TransportProvider transport={transport}>
-			<QueryClientProvider client={queryClient}>
-				<App />
-			</QueryClientProvider>
-		</TransportProvider>
+		<AuthProvider>
+			<TransportProvider transport={transport}>
+				<QueryClientProvider client={queryClient}>
+					<App />
+				</QueryClientProvider>
+			</TransportProvider>
+		</AuthProvider>
 	</React.StrictMode>,
 );

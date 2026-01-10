@@ -11,7 +11,7 @@ import {
 	updateItem,
 } from "@/proto-generated/item/v1/item_service-ItemService_connectquery";
 
-export const Route = createFileRoute("/items")({
+export const Route = createFileRoute("/(auth)/items/")({
 	component: Items,
 });
 
