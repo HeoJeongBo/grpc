@@ -5,18 +5,15 @@ import (
 	"grpc-server/database"
 	"grpc-server/proto-generated/user"
 	"grpc-server/proto-generated/user/userconnect"
-	"grpc-server/registry"
 	"net/http"
 
 	"connectrpc.com/connect"
 )
 
-func init() {
-	registry.Register(func(db *database.DB, mux *http.ServeMux) {
-		server := NewUserServer(db)
-		path, handle := userconnect.NewUserServiceHandler(server)
-		mux.Handle(path, handle)
-	})
+func Register(db *database.DB, mux *http.ServeMux) {
+	server := NewUserServer(db)
+	path, handle := userconnect.NewUserServiceHandler(server)
+	mux.Handle(path, handle)
 }
 
 type Server struct {

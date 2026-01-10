@@ -10,7 +10,6 @@ import (
 	"grpc-server/ent/user"
 	"grpc-server/proto-generated/auth"
 	"grpc-server/proto-generated/auth/authconnect"
-	"grpc-server/registry"
 
 	"net/http"
 
@@ -18,13 +17,10 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func init() {
-	registry.Register(func(db *database.DB, mux *http.ServeMux) {
-		server := NewAuthServer(db)
-		path, handler := authconnect.NewAuthServiceHandler(server)
-		mux.Handle(path, handler)
-	})
-
+func Register(db *database.DB, mux *http.ServeMux) {
+	server := NewAuthServer(db)
+	path, handler := authconnect.NewAuthServiceHandler(server)
+	mux.Handle(path, handler)
 }
 
 type Server struct {

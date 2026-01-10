@@ -9,7 +9,6 @@ import (
 	"grpc-server/database"
 	"grpc-server/ent"
 	"grpc-server/ent/item"
-	"grpc-server/registry"
 
 	itemv1 "grpc-server/proto-generated/item/v1"
 	"grpc-server/proto-generated/item/v1/itemv1connect"
@@ -18,12 +17,10 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func init() {
-	registry.Register(func(db *database.DB, mux *http.ServeMux) {
-		server := NewItemServer(db)
-		path, handler := itemv1connect.NewItemServiceHandler(server)
-		mux.Handle(path, handler)
-	})
+func Register(db *database.DB, mux *http.ServeMux) {
+	server := NewItemServer(db)
+	path, handler := itemv1connect.NewItemServiceHandler(server)
+	mux.Handle(path, handler)
 }
 
 type Server struct {
